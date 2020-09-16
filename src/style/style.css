@@ -1,0 +1,240 @@
+/* 공통 */
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+}
+
+input:focus, button:focus, textarea:focus {
+  outline: none;
+}
+
+textarea {
+  resize:vertical;
+}
+
+button {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-size: 0;
+}
+
+.button--add {
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url('/add.svg') no-repeat;
+}
+
+.button--delete {
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url('/delete.svg') no-repeat;
+}
+
+.button--close {
+  width: 1.8rem;
+  height: 1.8rem;
+  background: url('/delete.svg') no-repeat;
+}
+
+.button--cancel {
+  width: 5rem;
+  background-color: #fff;
+  border: 1px solid #292450;
+  font-size: 1rem;
+  line-height: 2rem;
+  color: #292450;
+  box-sizing: border-box;
+}
+
+.button--complete {
+  width: 5rem;
+  background-color: #292450;
+  border: 1px solid #292450;
+  font-size: 1rem;
+  line-height: 2rem;
+  color: #fff;
+}
+
+.button--complete:disabled{
+  width: 5rem;
+  background-color: #cecece;
+  border: 1px solid #cecece;
+  font-size: 1rem;
+  line-height: 2rem;
+  color: #fff;
+  cursor: default;
+}
+
+/* 헤더 */
+.app-header {
+  background-color: #292450;
+  height: 5rem;
+}
+
+.app-header > h1 {
+  color: #fff;
+  font-size: 1.8rem;
+  line-height: 5rem;
+  font-weight: normal;
+  padding-left: 1.5rem;
+}
+
+/* 메인앱 */
+.app {
+  display: flex;
+  flex-direction: row;
+  background-color: #faf9f9;
+  height: calc(100vh - 5rem);
+}
+
+.manager {
+  display: flex;
+  flex-direction: column;
+  width: 33.33vw;
+  padding: 1.5rem;
+  margin: 1rem;
+  box-sizing: border-box;
+  background-color: #f1f0ef;
+}
+
+.manager+.manager {
+  margin-left: 0;
+}
+
+.manager__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.manager__subject {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.manager__subject__count {
+  background-color: #cecece;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 0.6rem;
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1.2rem;
+  margin-right: 0.3rem;
+}
+
+.manager__subject__title {
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.manager__list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+  overflow-y: scroll;
+  padding: 0.3rem;
+}
+
+.todo {
+  width: 92%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  line-height: 1.5rem;
+  background-color: #faf9f9;
+  margin-top: 1rem;
+  padding: 1.5rem 1rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 0 7px #00000025;
+  cursor: pointer;
+}
+
+.todo__content {
+  display: flex;
+  width: 80%;
+}
+
+/* todo 추가 제너레이터 */
+.manager__generator {
+  display: none;
+  flex-direction: column;
+  margin-top: 2rem;
+  transition: opacity 600ms, visibility 600ms;
+}
+
+.generator__input {
+  min-height: 3.5rem;
+  padding: 1rem;
+}
+.generator__buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.generator__buttons > .button--cancel {
+  margin-left: 1rem;
+}
+
+/* modal */
+.popup-wrapper {
+  background-color: #00000080;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+.popup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 30rem;
+  background-color: #faf9f9;
+  padding: 1.5rem;
+  box-shadow: 0 0 20px #0000003b;
+
+}
+
+.popup > h4 {
+  font-size: 1.2rem;
+  font-weight: normal;
+  line-height: 2rem;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #cecece;
+}
+
+
+.popup > h5 {
+  font-size: 1rem;
+  font-weight: normal;
+  padding: 1rem 0 0.5rem 0;
+}
+
+.popup__input {
+  padding: 0.8rem;
+  border: 1px solid #cecece;
+}
+
+.popup > .button--complete {
+  align-self: center;
+  margin-top: 1rem;
+}
+
+.popup > .button--close {
+  align-self: center;
+  position: absolute;
+  top: 0.7rem;
+  right: 1.5rem;
+  margin-top: 1rem;
+  background-size: cover;
+}
