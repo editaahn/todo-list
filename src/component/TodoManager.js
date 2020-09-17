@@ -78,6 +78,7 @@ const TodoManager = ({
             <Todo
               key={todo.todo_id}
               id={`${id}_${todo.todo_id}`}
+              todo_id={todo.todo_id}
               content={todo.content}
               deleteTodo={deleteTodo}
               setTodoEditMode={setTodoEditMode}
