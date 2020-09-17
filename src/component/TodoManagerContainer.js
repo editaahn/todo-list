@@ -24,7 +24,9 @@ const TodoManagerContainer = ({ managers, todos, getTodoDB, setManagerName, addT
             addTodo={(id,content) => addTodo({'manager_id': id, 'content': content})}
             deleteTodo={id => deleteTodo(id)}
             editTodo={(id,content) => editTodo({'todo_id': id, 'content': content})}
-            moveTodo={(todo_id,manager_id) => moveTodo({'todo_id': todo_id, 'manager_id': manager_id})}
+            moveTodo={(param1,param2,param3) => moveTodo({
+              'todo_id': param1, 'prev_manager_id': param2, 'current_manager_id': param3, 
+            })}
           />
         ))}
     </main>

@@ -16,7 +16,7 @@ const Todo = ({
     setEditingTodoID(id);
   };
   return (
-    <li id={'todo_'+id} className="todo" draggable={true} onDragStart={(e) => drag(e)}>
+    <li id={id} className="todo" draggable={true} onDragStart={(e) => drag(e)}>
       <p className="todo__content" onClick={editEvt}>
         {content}
       </p>

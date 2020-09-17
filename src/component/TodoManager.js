@@ -27,9 +27,13 @@ const TodoManager = ({
   };
   const drop = (e) => {
     e.preventDefault();
-    const todo_id = e.dataTransfer.getData("text"); 
-    const manager_id = (e.target.tagname === 'SECTION') ? e.target.id : e.target.closest('section').id
-    moveTodo(todo_id.split('_')[1], manager_id.split('_')[1]);
+    const todo_id = e.dataTransfer.getData("text").split('_')[1]; 
+    const prev_manager_id = e.dataTransfer.getData("text").split('_')[0]; 
+    const curr_manager_id =
+      e.target.tagname === "SECTION"
+        ? e.target.id.split("_")[1]
+        : e.target.closest("section").id.split("_")[1];
+    moveTodo(todo_id, prev_manager_id, curr_manager_id);
   };
   const allowDrop = (e) => {
     e.preventDefault();
@@ -73,7 +77,7 @@ const TodoManager = ({
           {sortedTodos().map((todo) => (
             <Todo
               key={todo.todo_id}
-              id={todo.todo_id}
+              id={`${id}_${todo.todo_id}`}
               content={todo.content}
               deleteTodo={deleteTodo}
               setTodoEditMode={setTodoEditMode}
