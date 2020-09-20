@@ -39,13 +39,14 @@ def create_app(test_config=None):  # 1)
             })
 
         for row in rows_history:
-            print(row)
             data['history'].append({
                 'history_id': row.history_id,
                 'type': row.type,
                 'prev_manager_id': row.prev_manager_id,
                 'current_manager_id': row.current_manager_id,
                 'todo_id': row.todo_id,
+                'content': row.content,
+                'date': row.date
             })
 
         return jsonify(data)

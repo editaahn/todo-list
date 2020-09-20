@@ -3,7 +3,9 @@
   margin: 0;
   padding: 0;
   font-size: 1rem;
+  list-style: none;
 }
+
 
 input:focus, button:focus, textarea:focus {
   outline: none;
@@ -67,10 +69,21 @@ button {
   cursor: default;
 }
 
+.button--more{
+  width: 2rem;
+  height: 2rem;
+  background: url('/more.svg') no-repeat;
+  margin: 1.5rem;
+}
+
 /* 헤더 */
 .app-header {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   background-color: #292450;
   height: 5rem;
+  display: flex;
 }
 
 .app-header > h1 {
@@ -237,4 +250,45 @@ button {
   right: 1.5rem;
   margin-top: 1rem;
   background-size: cover;
+}
+
+
+/* 히스토리 */
+.history-center {
+  position: absolute;
+  right: 0;
+  top: 5rem;
+  width: 25rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 1.5rem;
+  height: calc(100vh - 8rem);
+  box-shadow: -4px -4px 15px #0000002c;
+  transition: right 0.5s;
+}
+
+.history-center__header{
+  border-bottom: 1px solid #cecece;
+  padding-bottom: 1rem;
+  line-height: 2rem;
+}
+
+.history-center__header > h2 {
+  font-size: 1.2rem;
+}
+
+.history-center__list {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.history-center__history {
+  line-height: 1.5rem;
+  margin-top: 1rem;
+}
+
+.history-center__history__time {
+  color: #929191;
+  font-size: 0.8rem;
 }

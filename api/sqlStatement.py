@@ -18,10 +18,12 @@ def getAllTodo__execute():
         """)
 def getAllHistory__execute():
     return text("""	
-            SELECT h.*, a.type
+            SELECT h.*, a.type, t.content
             FROM history h
             LEFT JOIN action_type a
                 ON h.type_id = a.type_id
+            LEFT JOIN todo t
+                ON h.todo_id = t.todo_id
             WHERE 
                 h.date < NOW()
                 AND h.date >= NOW() - INTERVAL 12 HOUR
