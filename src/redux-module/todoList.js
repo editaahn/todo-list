@@ -47,7 +47,8 @@ const initialState = {
     DELETE_TODO: false,
     EDIT_TODO: false,
     MOVE_TODO: false,
-  }
+  },
+  history: []
 };
 
 
@@ -69,6 +70,7 @@ const todoList = handleActions(
       },
       managers: data.managers,
       todos: data.todos,
+      history: data.history
     }),
     [GET_TODO_DB_FAILURE] : state => ({
       ...state,
@@ -112,13 +114,14 @@ const todoList = handleActions(
         ADD_TODO: true
       }
     }),
-    [ADD_TODO_SUCCESS] : (state, {payload: newTodo}) => ({
+    [ADD_TODO_SUCCESS] : (state, {payload: result}) => ({
       ...state,
       loading: {
         ...state.loading,
         ADD_TODO: false
       },
-      todos: state.todos.concat(newTodo)
+      todos: state.todos.concat(result.todo),
+      history: state.history.concat({...result.history,...result.todo}),
     }),
     [ADD_TODO_FAILURE] : state => ({
       ...state,
@@ -134,47 +137,20 @@ const todoList = handleActions(
         ADD_TODO: true
       }
     }),
-    [DELETE_TODO_SUCCESS] : (state, {payload: deleteTodo}) => ({
+    [DELETE_TODO_SUCCESS] : (state, {payload: result}) => ({
       ...state,
       loading: {
         ...state.loading,
         DELETE_TODO: false
       },
-      todos: state.todos.filter(todo => todo.todo_id !== deleteTodo.todo_id)
+      todos: state.todos.filter(todo => todo.todo_id !== result.todo.todo_id),
+      history: state.history.concat({...result.history,...result.todo}),
     }),
     [DELETE_TODO_FAILURE] : state => ({
       ...state,
       loading: {
         ...state.loading,
         DELETE_TODO: false
-      }
-    }),
-    [EDIT_TODO] : state => ({
-      ...state,
-      loading: {
-        ...state.loading,
-        EDIT_TODO: true
-      }
-    }),
-    [EDIT_TODO_SUCCESS] : (state, {payload: addedTodo}) => ({
-      ...state,
-      loading: {
-        ...state.loading,
-        EDIT_TODO: false
-      },
-      todos: 
-        state.todos.reduce((acc, prevTodo) => {
-          prevTodo.todo_id === addedTodo.todo_id
-            ? acc.push(addedTodo)
-            : acc.push(prevTodo)
-          return acc
-        }, [])
-    }),
-    [EDIT_TODO_FAILURE] : state => ({
-      ...state,
-      loading: {
-        ...state.loading,
-        EDIT_TODO: false
       }
     }),
     [MOVE_TODO] : state => ({
@@ -184,7 +160,7 @@ const todoList = handleActions(
         MOVE_TODO: true
       }
     }),
-    [MOVE_TODO_SUCCESS] : (state, {payload: movedTodo}) => ({
+    [MOVE_TODO_SUCCESS] : (state, {payload: result}) => ({
       ...state,
       loading: {
         ...state.loading,
@@ -192,17 +168,47 @@ const todoList = handleActions(
       },
       todos: 
         state.todos.reduce((acc, prevTodo) => {
-          prevTodo.todo_id === movedTodo.todo_id
-            ? acc.push(movedTodo)
+          prevTodo.todo_id === result.todo.todo_id
+            ? acc.push(result.todo)
             : acc.push(prevTodo)
           return acc
-        }, [])
+        }, []),
+      history: state.history.concat({...result.history,...result.todo}),
     }),
     [MOVE_TODO_FAILURE] : state => ({
       ...state,
       loading: {
         ...state.loading,
         MOVE_TODO: false
+      }
+    }),
+    [EDIT_TODO] : state => ({
+      ...state,
+      loading: {
+        ...state.loading,
+        EDIT_TODO: true
+      }
+    }),
+    [EDIT_TODO_SUCCESS] : (state, {payload: result}) => ({
+      ...state,
+      loading: {
+        ...state.loading,
+        EDIT_TODO: false
+      },
+      todos: 
+        state.todos.reduce((acc, prevTodo) => {
+          prevTodo.todo_id === result.todo.todo_id
+            ? acc.push(result.todo)
+            : acc.push(prevTodo)
+          return acc
+        }, []),
+      history: state.history.concat({...result.history,...result.todo}),
+    }),
+    [EDIT_TODO_FAILURE] : state => ({
+      ...state,
+      loading: {
+        ...state.loading,
+        EDIT_TODO: false
       }
     }),
   }, initialState
