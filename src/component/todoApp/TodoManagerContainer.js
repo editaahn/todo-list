@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import * as actions from "../redux-module/todoList";
+import * as actions from "../../redux-module/todoList";
 import TodoManager from "./TodoManager";
 
 const TodoManagerContainer = ({ managers, todos, getTodoDB, setManagerName, addTodo, deleteTodo, editTodo, moveTodo, loading, }) => {
