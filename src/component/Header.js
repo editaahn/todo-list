@@ -4,7 +4,7 @@ const Header = ({setHistoryOpened, isHistoryOpened}) => {
   return (
     <header className="app-header">
       <h1>To-do List</h1>
-      <button class="button--more" onClick={() => setHistoryOpened(!isHistoryOpened)}>history</button>
+      <button className="button--more" onClick={() => setHistoryOpened(!isHistoryOpened)}>history</button>
     </header>
   )
 }
