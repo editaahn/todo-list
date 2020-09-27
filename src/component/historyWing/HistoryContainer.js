@@ -18,19 +18,16 @@ const HistoryContainer = ({isHistoryOpened}) => {
       <ul className="history-center__list">
         {sortedHistories.map((history) => (
           <History
+            key={history.history_id}
             content={history.content}
             date={history.date}
             prev_manager_name={
               history.prev_manager_id &&
-                managers.find(
-                  (manager) => manager.manager_id === history.prev_manager_id
-                ).name
+                managers.find(manager => manager.manager_id === history.prev_manager_id).name
             }
             current_manager_name={
-              history.current_manager_id &&
-                managers.find(
-                  (manager) => manager.manager_id === history.current_manager_id
-                ).name
+              history.manager_id &&
+                managers.find(manager => manager.manager_id === history.manager_id).name
             }
             type={history.type}
           />
