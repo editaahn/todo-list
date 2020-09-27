@@ -19,7 +19,7 @@ CREATE TABLE history (
  todo_id int(10) NOT NULL,
  date datetime NULL,
  prev_manager_id int(10) NULL,
- current_manager_id int(10) NULL
+ manager_id int(10) NULL
 );
 
 CREATE TABLE action_type (

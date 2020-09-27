@@ -43,7 +43,7 @@ def create_app(test_config=None):  # 1)
                 'history_id': row.history_id,
                 'type': row.type,
                 'prev_manager_id': row.prev_manager_id,
-                'current_manager_id': row.current_manager_id,
+                'manager_id': row.manager_id,
                 'todo_id': row.todo_id,
                 'content': row.content,
                 'date': row.date
@@ -81,12 +81,12 @@ def create_app(test_config=None):  # 1)
         history_id = app.database.execute(
             add__history(), {
                 'todo_id': new_todo_id,
-                'current_manager_id': new_todo['manager_id']
+                'manager_id': new_todo['manager_id']
         }).lastrowid
 
         result = current_app.database.execute(
             todo__result(),
-            {'todo_id':new_todo_id, 'history_id': history_id}
+            {'id':new_todo_id, 'history_id': history_id}
         ).fetchone()
 
         return jsonify({
@@ -134,14 +134,14 @@ def create_app(test_config=None):  # 1)
         app.database.execute(
             move__execute(), {
             'id': moved_todo['todo_id'], 
-            'manager_id': moved_todo['current_manager_id']
+            'manager_id': moved_todo['manager_id']
         })
 
         history_id = app.database.execute(
             move__history(), {
                 'todo_id': moved_todo['todo_id'],
                 'prev_manager_id': moved_todo['prev_manager_id'],
-                'current_manager_id': moved_todo['current_manager_id']
+                'manager_id': moved_todo['manager_id']
         }).lastrowid
 
         result = current_app.database.execute(
@@ -158,8 +158,9 @@ def create_app(test_config=None):  # 1)
             'history': {
                 'type': result.type,
                 'date': result.date,
-                'prev_manager_id': result.manager_id,
-            }
+                'prev_manager_id': result.prev_manager_id,
+            },
+            'index': int(moved_todo['index'])
         }) if result else None
 
     @app.route('/todo-list/todo', methods=['PUT'])

@@ -15,6 +15,7 @@ def getAllTodo__execute():
             SELECT todo_id, manager_id, content
             FROM todo
             WHERE deleted = 0
+            ORDER BY todo_id DESC
         """)
 def getAllHistory__execute():
     return text("""	
@@ -62,12 +63,12 @@ def add__history():
                 type_id,
                 todo_id,
                 date,
-                current_manager_id
+                manager_id
             ) VALUES (
                 1,
                 :todo_id,
                 NOW(),
-                :current_manager_id
+                :manager_id
             )
         """)
 
@@ -105,13 +106,13 @@ def move__history():
                 todo_id,
                 date,
                 prev_manager_id,
-                current_manager_id
+                manager_id
             ) VALUES (
                 3,
                 :todo_id,
                 NOW(),
                 :prev_manager_id,
-                :current_manager_id
+                :manager_id
             );
         """)
 # todo 수정
@@ -137,7 +138,7 @@ def edit__history():
 # todo에 변화 발생 시 result 함수
 def todo__result():
     return text("""
-            SELECT t.todo_id, t.manager_id, t.content, h.date, a.type
+            SELECT h.*, t.*, a.type
             FROM todo t
             INNER JOIN history h
                 ON t.todo_id = h.todo_id
