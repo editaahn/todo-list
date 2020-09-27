@@ -16,12 +16,14 @@ const EditPopup = ({ type, id, content, changeValue, setEditMode, maxLength = 50
           className="popup__input"
           maxLength={maxLength}
           onChange={e => setInputElValue(e.target.value)}
+          defaultValue={content}
         />
         : 
         <textarea
           className="popup__input"
           maxLength={maxLength}
           onChange={e => setInputElValue(e.target.value)}
+          defaultValue={content}
         />
         }
         <button
