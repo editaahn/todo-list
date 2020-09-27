@@ -14,3 +14,12 @@ VALUES
   (2, 'SQL 쿼리 작성하기', false),
   (1, '쿼리 실행하기', false),
   (1, '리액트 환경 세팅하기', false);
+
+INSERT INTO
+  action_type
+  (type)
+VALUES
+  ('ADD'),
+  ('DELETE'),
+  ('MOVE'),
+  ('EDIT');

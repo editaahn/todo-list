@@ -15,7 +15,14 @@ CREATE TABLE todo (
 
 CREATE TABLE history (
  history_id int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
- type varchar(10) NOT NULL,
- date date NULL,
- todo_id int(10) NOT NULL
+ type_id varchar(10) NOT NULL,
+ todo_id int(10) NOT NULL,
+ date datetime NULL,
+ prev_manager_id int(10) NULL,
+ manager_id int(10) NULL
+);
+
+CREATE TABLE action_type (
+  action_id int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  type varchar(10) NOT NULL,
 );
