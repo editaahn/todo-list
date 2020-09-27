@@ -11,7 +11,7 @@ const TodoManagerContainer = ({ managers, todos, getTodoDB, setManagerName, addT
   return (
     <main className="app">
       {managers &&
-        !loading.GET_TODO_DB &&
+        // !loading.GET_TODO_DB &&
         managers.map((manager) => (
           <TodoManager
             key={manager.manager_id}
@@ -33,6 +33,6 @@ const TodoManagerContainer = ({ managers, todos, getTodoDB, setManagerName, addT
 }
 
 export default connect(
-  ({ todoList }) => todoList,
+  ({ todoList, loading }) => ({...todoList, ...loading}),
   actions
 )(TodoManagerContainer);
