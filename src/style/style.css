@@ -3,6 +3,12 @@
   margin: 0;
   padding: 0;
   font-size: 1rem;
+  list-style: none;
+}
+
+body {
+  background-color: #0f4c81;
+  overflow: hidden;
 }
 
 input:focus, button:focus, textarea:focus {
@@ -25,6 +31,9 @@ button {
   height: 1.5rem;
   background: url('/add.svg') no-repeat;
 }
+.button--add:hover {
+  background: url('/add_hover.svg') no-repeat;
+}
 
 .button--delete {
   width: 1.5rem;
@@ -38,20 +47,24 @@ button {
   background: url('/delete.svg') no-repeat;
 }
 
+.button--delete:hover, .button--close:hover {
+  background: url('/delete_hover.svg') no-repeat;
+}
+
 .button--cancel {
   width: 5rem;
-  background-color: #fff;
-  border: 1px solid #292450;
+  background-color: #ffffff94;
+  border: 1px solid #031d33;
   font-size: 1rem;
   line-height: 2rem;
-  color: #292450;
+  color: #031d33;
   box-sizing: border-box;
 }
 
 .button--complete {
   width: 5rem;
-  background-color: #292450;
-  border: 1px solid #292450;
+  background-color: #031d33;
+  border: 1px solid #031d33;
   font-size: 1rem;
   line-height: 2rem;
   color: #fff;
@@ -59,18 +72,29 @@ button {
 
 .button--complete:disabled{
   width: 5rem;
-  background-color: #cecece;
-  border: 1px solid #cecece;
+  background-color: #cecece54;
+  border: 1px solid#cecece54;
   font-size: 1rem;
   line-height: 2rem;
-  color: #fff;
+  color: #aaaaaa;
   cursor: default;
+}
+
+.button--more{
+  width: 2rem;
+  height: 2rem;
+  background: url('/more.svg') no-repeat;
+  margin: 1.5rem;
 }
 
 /* 헤더 */
 .app-header {
-  background-color: #292450;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(180deg, #00000081 0%, #0f4c81 100% );
   height: 5rem;
+  display: flex;
 }
 
 .app-header > h1 {
@@ -85,7 +109,6 @@ button {
 .app {
   display: flex;
   flex-direction: row;
-  background-color: #faf9f9;
   height: calc(100vh - 5rem);
 }
 
@@ -96,7 +119,7 @@ button {
   padding: 1.5rem;
   margin: 1rem;
   box-sizing: border-box;
-  background-color: #f1f0ef;
+  background: linear-gradient(180deg, #0f4c81 0%, #2e2e2e5b 80%);
 }
 
 .manager+.manager {
@@ -107,6 +130,7 @@ button {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  color: #fff;
 }
 
 .manager__subject {
@@ -116,7 +140,7 @@ button {
 }
 
 .manager__subject__count {
-  background-color: #cecece;
+  background-color: #2e2e2e;
   width: 1.2rem;
   height: 1.2rem;
   border-radius: 0.6rem;
@@ -130,6 +154,7 @@ button {
   font-size: 1.2rem;
   cursor: pointer;
 }
+
 
 .manager__list {
   display: flex;
@@ -146,12 +171,12 @@ button {
   flex-direction: row;
   justify-content: space-between;
   line-height: 1.5rem;
-  background-color: #faf9f9;
+  background-color: #faf9f91c;
   margin-top: 1rem;
   padding: 1.5rem 1rem;
-  border-radius: 0.8rem;
-  box-shadow: 0 0 7px #00000025;
+  /* box-shadow: 0 0 7px #d8d8d825; */
   cursor: pointer;
+  color: #ebebebbe;
 }
 
 .todo__content {
@@ -170,7 +195,15 @@ button {
 .generator__input {
   min-height: 3.5rem;
   padding: 1rem;
+  background: #0f4c81;
+  font-size: 1.2rem;
+  color: #fff;
+  border: 1px solid #fff;
 }
+.generator__input::placeholder {
+  color: rgba(255, 255, 255, 0.479);
+}
+
 .generator__buttons {
   display: flex;
   justify-content: center;
@@ -237,4 +270,45 @@ button {
   right: 1.5rem;
   margin-top: 1rem;
   background-size: cover;
+}
+
+
+/* 히스토리 */
+.history-center {
+  position: absolute;
+  right: 0;
+  top: 5rem;
+  width: 25rem;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(90deg, #cecece 10%, #adadadcb 100%);
+  padding: 1.5rem;
+  height: calc(100vh - 8rem);
+  box-shadow: -4px -4px 15px #0000002c;
+  transition: right 0.5s;
+}
+
+.history-center__header{
+  border-bottom: 1px solid #fff;
+  padding-bottom: 1rem;
+  line-height: 2rem;
+}
+
+.history-center__header > h2 {
+  font-size: 1.2rem;
+}
+
+.history-center__list {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.history-center__history {
+  line-height: 1.5rem;
+  margin-top: 1rem;
+}
+
+.history-center__history__time {
+  color: #6b6b6b;
+  font-size: 0.8rem;
 }
