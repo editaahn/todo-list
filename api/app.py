@@ -96,6 +96,7 @@ def create_app(test_config=None):  # 1)
                 'content': result.content,
             },
             'history': {
+                'history_id': result.history_id,
                 'type': result.type,
                 'date': result.date,
             }
@@ -121,6 +122,7 @@ def create_app(test_config=None):  # 1)
                 'content': result.content,
             },
             'history': {
+                'history_id': result.history_id,
                 'type': result.type,
                 'date': result.date,
                 'prev_manager_id': result.manager_id,
@@ -156,6 +158,7 @@ def create_app(test_config=None):  # 1)
                 'content': result.content, 
             },
             'history': {
+                'history_id': result.history_id,
                 'type': result.type,
                 'date': result.date,
                 'prev_manager_id': result.prev_manager_id,
@@ -189,6 +192,7 @@ def create_app(test_config=None):  # 1)
                 'content': result.content, 
             },
             'history': {
+                'history_id': result.history_id,
                 'type': result.type,
                 'date': result.date,
         }
