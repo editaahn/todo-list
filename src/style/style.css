@@ -134,34 +134,24 @@ button {
 .manager__list {
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin-top: 1rem;
   overflow-y: scroll;
-  height: 100vh;
-}
-
-.todo-wrapper, .todo-wrapper--dragged--before {
-  padding-top: 1rem;
+  padding: 0.3rem;
 }
 
 .todo {
+  width: 92%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   line-height: 1.5rem;
-  background-color: #faf9f91c;
+  background-color: #faf9f9;
+  margin-top: 1rem;
   padding: 1.5rem 1rem;
   border-radius: 0.8rem;
   box-shadow: 0 0 7px #00000025;
   cursor: pointer;
-}
-
-.todo-wrapper--dragged--before::before {
-  width: 100%;
-  height: 3rem;
-  display: flex;
-  background-color: #faf9f98c;
-  margin-bottom: 1rem;
-  content: '';
 }
 
 .todo__content {

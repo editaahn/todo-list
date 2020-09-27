@@ -12,51 +12,27 @@ const TodoManager = ({
   addTodo,
   deleteTodo,
   moveTodo,
-  order,
 }) => {
-  
-  const sortedTodos = order.reduce((acc, todoInOrder) => {
-    return acc.concat(todos.find(todo => todo.todo_id === todoInOrder))
-  }, []);
-
   const [isNameEditMode, setNameEditMode] = useState(false);
   const [isTodoEditMode, setTodoEditMode] = useState(false);
   const [editingTodoID, setEditingTodoID] = useState(null);
   const [isAddMode, setAddMode] = useState(false);
-
+  const sortedTodos = () => {
+    return [...todos].sort((a, b) => {
+      return a.todo_id > b.todo_id ? -1 : 1;
+    });
+  };
   const drag = (e) => {
-    e.dataTransfer.setData("number", e.target.getAttribute('todo_id'));
-    e.dataTransfer.setData("text", e.target.getAttribute('manager_id'));
-    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text", e.target.id);
   };
-
-  const dragEnter = (e) => {
-    e.target.tagName === 'LI' && 
-      e.target.classList.replace(e.target.className,'todo-wrapper--dragged--before')
-  };
-
-  const dragLeave = (e) => {
-    e.target.tagName === 'LI' && 
-      e.target.classList.replace(e.target.className, 'todo-wrapper')
-  };
-
-  const allowDrop = (e) => {
-    e.preventDefault();
-  };
-
   const drop = (e) => {
     e.preventDefault();
-    const beforeDrop = e.dataTransfer;
-    const afterDrop = e.target.tagName === 'LI' ? e.target : e.target.closest('li');
-    
-    const todoID = beforeDrop.getData("number");
-    const prevManagerID = beforeDrop.getData("text");
-    const currManagerID = afterDrop ? afterDrop.getAttribute('manager_id') : e.target.getAttribute('manager_id');
-    const currIndex = afterDrop ? afterDrop.getAttribute('index') : e.target.childElementCount;
-    
-    moveTodo(todoID, prevManagerID, currManagerID, currIndex);
-
-    afterDrop && afterDrop.classList.replace(afterDrop.className, 'todo-wrapper');
+    const todo_id = e.dataTransfer.getData("text"); 
+    const manager_id = (e.target.tagname === 'SECTION') ? e.target.id : e.target.closest('section').id
+    moveTodo(todo_id.split('_')[1], manager_id.split('_')[1]);
+  };
+  const allowDrop = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -64,6 +40,8 @@ const TodoManager = ({
       <section 
         id={"manager_" + id}
         className="manager"
+        onDrop={(e) => drop(e)}
+        onDragOver={(e) => allowDrop(e)}
       >
         <header className="manager__header">
           <div className="manager__subject">
@@ -91,26 +69,17 @@ const TodoManager = ({
         </div>
         <ul
           className="manager__list"
-          manager_id ={id}
-          onDrop={(e) => drop(e)}
-          onDragOver={(e) => allowDrop(e)}
-          onDragEnter={e => dragEnter(e)}
-          onDragLeave={e => dragLeave(e)}
         >
-          {sortedTodos.map((todo,i) => (
+          {sortedTodos().map((todo) => (
             <Todo
               key={todo.todo_id}
-              manager_id={id}
-              todo_id={todo.todo_id}
+              id={todo.todo_id}
               content={todo.content}
               deleteTodo={deleteTodo}
               setTodoEditMode={setTodoEditMode}
               setEditingTodoID={setEditingTodoID}
               drag={drag}
-              onDragEnter={dragEnter}
-              index={i}
-              onDragLeave={dragLeave}
-          />
+            />
           ))}
         </ul>
         {isNameEditMode && (
@@ -127,7 +96,6 @@ const TodoManager = ({
           <EditPopup
             type="TODO_CONTENT"
             id={editingTodoID}
-            content={todos.find(todo => todo.todo_id === editingTodoID).content}
             changeValue={editTodo}
             setEditMode={setTodoEditMode}
             maxLength={50}
