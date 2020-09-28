@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import * as api from '../library/request';
+import * as request from '../library/request';
 import requestThunk from '../library/requestThunk';
 
 //action 정의
@@ -22,13 +22,12 @@ const MOVE_TODO = 'todoList/MOVE_TODO';
 const MOVE_TODO_SUCCESS = 'todoList/MOVE_TODO_SUCCESS';
 
 //비동기 통신 액션 생성 함수
-export const getTodoDB = requestThunk(GET_TODO_DB, api.getTodoDB);
-export const setManagerName = requestThunk(SET_MANAGER_NAME, api.setManagerName);
-export const addTodo = requestThunk(ADD_TODO, api.addTodo);
-export const deleteTodo = requestThunk(DELETE_TODO, api.deleteTodo);
-export const editTodo = requestThunk(EDIT_TODO, api.editTodo);
-export const moveTodo = requestThunk(MOVE_TODO, api.moveTodo);
-
+export const getTodoDB = requestThunk(GET_TODO_DB, request.getTodoDB);
+export const setManagerName = requestThunk(SET_MANAGER_NAME, request.setManagerName);
+export const addTodo = requestThunk(ADD_TODO, request.addTodo);
+export const deleteTodo = requestThunk(DELETE_TODO, request.deleteTodo);
+export const editTodo = requestThunk(EDIT_TODO, request.editTodo);
+export const moveTodo = requestThunk(MOVE_TODO, request.moveTodo);
 
 //초기상태
 const initialState = {
@@ -41,12 +40,9 @@ const initialState = {
 //리듀서
 const todoList = handleActions(
   {
-    [GET_TODO_DB_SUCCESS]: (state, { payload: data }) => ({
-      ...state,
-      managers: data.managers,
-      todos: data.todos,
-      history: data.history,
-      orders: data.todos.reduce((acc, todo) => {
+    [GET_TODO_DB_SUCCESS]: (state, { payload: fetchedData }) => ({
+      ...fetchedData,
+      orders: fetchedData.todos.reduce((acc, todo) => {
         todo.manager_id in acc
           ? acc[todo.manager_id].push(todo.todo_id)
           : acc[todo.manager_id] = [todo.todo_id];
@@ -77,7 +73,8 @@ const todoList = handleActions(
       history: state.history.concat({ ...history, ...todo }),
       orders: {
         ...state.orders,
-        [history.prev_manager_id]: state.orders[history.prev_manager_id].filter(prevTodo => prevTodo !== todo.todo_id)
+        [history.prev_manager_id]: state.orders[history.prev_manager_id]
+          .filter(prevTodo => prevTodo !== todo.todo_id)
       }
     }),
     [MOVE_TODO_SUCCESS]: (state, { payload: { todo, history, index } }) => ({
@@ -91,29 +88,28 @@ const todoList = handleActions(
       orders: {
         ...state.orders,
         [history.prev_manager_id]: 
-          state.orders[history.prev_manager_id].filter( movedTodoID => movedTodoID !== todo.todo_id ),
+          state.orders[history.prev_manager_id].filter( prevTodo => prevTodo !== todo.todo_id ),
         [todo.manager_id]: 
           !state.orders[todo.manager_id] 
             ? [todo.todo_id] 
             : state.orders[todo.manager_id].reduce((acc, todoInOrder, i, arr) => {
-              if (index === arr.length && i === arr.length-1)
-                return acc.concat(todoInOrder, todo.todo_id) // 빈 공간에 drop한 경우 끝으로 붙임
-              else if (i === index) 
-                return acc.concat(todo.todo_id, todoInOrder) // todo li들 사이에 drop한 경우 drop 위치에 끼움
-              else 
-                return acc.concat(todoInOrder)
-            }, []),
+                if (index === arr.length && i === arr.length-1)
+                  return [ ...acc, todoInOrder, todo.todo_id ] // 빈 공간에 drop한 경우 끝으로 붙임
+                else if (i === index) 
+                  return [ ...acc, todo.todo_id, todoInOrder ] // todo li들 사이에 drop한 경우 drop 위치에 끼움
+                else 
+                  return [ ...acc, todoInOrder ]
+              }, []),
       }
     }),
-    [EDIT_TODO_SUCCESS]: (state, { payload: result }) => ({
+    [EDIT_TODO_SUCCESS]: (state, { payload: { todo, history } }) => ({
       ...state,
       todos: state.todos.reduce((acc, prevTodo) => {
-        prevTodo.todo_id === result.todo.todo_id
-          ? acc.push(result.todo)
-          : acc.push(prevTodo);
-        return acc;
+        return prevTodo.todo_id === todo.todo_id
+          ? [ ...acc, todo ]
+          : [ ...acc, prevTodo ];
       }, []),
-      history: state.history.concat({ ...result.history, ...result.todo }),
+      history: [ ...state.history, { ...history, ...todo } ],
     }),
   },
   initialState
