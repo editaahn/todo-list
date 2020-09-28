@@ -33,7 +33,7 @@ export const moveTodo = requestThunk(MOVE_TODO, request.moveTodo);
 const initialState = {
   todos: [],
   managers: [],
-  history: [],
+  histories: [],
   orders: {},
 };
 
@@ -61,7 +61,7 @@ const todoList = handleActions(
     [ADD_TODO_SUCCESS]: (state, { payload: { todo, history } }) => ({
       ...state,
       todos: state.todos.concat(todo),
-      history: state.history.concat({ ...history, ...todo }),
+      histories: [ ...state.history, { ...history, ...todo } ],
       orders: {
         ...state.orders,
         [todo.manager_id]: [todo.todo_id, ...state.orders[todo.manager_id]]
@@ -70,7 +70,7 @@ const todoList = handleActions(
     [DELETE_TODO_SUCCESS]: (state, { payload: { todo, history } }) => ({
       ...state,
       todos: state.todos.filter(prevTodo => prevTodo.todo_id !== todo.todo_id),
-      history: state.history.concat({ ...history, ...todo }),
+      histories: [ ...state.history, { ...history, ...todo } ],
       orders: {
         ...state.orders,
         [history.prev_manager_id]: state.orders[history.prev_manager_id]
@@ -84,7 +84,7 @@ const todoList = handleActions(
           ? acc.concat(todo)
           : acc.concat(prevTodo);
       }, []),
-      history: state.history.concat({ ...history, ...todo }),
+      histories: [ ...state.history, { ...history, ...todo } ],
       orders: {
         ...state.orders,
         [history.prev_manager_id]: 
@@ -109,7 +109,7 @@ const todoList = handleActions(
           ? [ ...acc, todo ]
           : [ ...acc, prevTodo ];
       }, []),
-      history: [ ...state.history, { ...history, ...todo } ],
+      histories: [ ...state.history, { ...history, ...todo } ],
     }),
   },
   initialState

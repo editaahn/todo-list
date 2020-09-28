@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import History from "./History";
 
 const HistoryContainer = ({isHistoryOpened}) => {
-  const histories = useSelector(({ todoList }) => todoList.history);
+  const histories = useSelector(({ todoList }) => todoList.histories);
   const managers = useSelector(({ todoList }) => todoList.managers);
   const sortedHistories = histories.sort((a, b) => {
     return a.date < b.date ? 1 : -1;

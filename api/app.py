@@ -24,7 +24,7 @@ def create_app(test_config=None):  # 1)
         rows_todo = app.database.execute(getAllTodo__execute()).fetchall()
         rows_history = app.database.execute(getAllHistory__execute()).fetchall()
 
-        data = {'managers': [], 'todos': [], 'history': []}
+        data = {'managers': [], 'todos': [], 'histories': []}
 
         for row in rows_manager:
             data['managers'].append({
@@ -39,7 +39,7 @@ def create_app(test_config=None):  # 1)
             })
 
         for row in rows_history:
-            data['history'].append({
+            data['histories'].append({
                 'history_id': row.history_id,
                 'type': row.type,
                 'prev_manager_id': row.prev_manager_id,
