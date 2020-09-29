@@ -61,7 +61,7 @@ const todoList = handleActions(
     [ADD_TODO_SUCCESS]: (state, { payload: { todo, history } }) => ({
       ...state,
       todos: state.todos.concat(todo),
-      histories: [ ...state.history, { ...history, ...todo } ],
+      histories: [ ...state.histories, { ...history, ...todo } ],
       orders: {
         ...state.orders,
         [todo.manager_id]: [todo.todo_id, ...state.orders[todo.manager_id]]
@@ -70,7 +70,7 @@ const todoList = handleActions(
     [DELETE_TODO_SUCCESS]: (state, { payload: { todo, history } }) => ({
       ...state,
       todos: state.todos.filter(prevTodo => prevTodo.todo_id !== todo.todo_id),
-      histories: [ ...state.history, { ...history, ...todo } ],
+      histories: [ ...state.histories, { ...history, ...todo } ],
       orders: {
         ...state.orders,
         [history.prev_manager_id]: state.orders[history.prev_manager_id]
@@ -84,7 +84,7 @@ const todoList = handleActions(
           ? acc.concat(todo)
           : acc.concat(prevTodo);
       }, []),
-      histories: [ ...state.history, { ...history, ...todo } ],
+      histories: [ ...state.histories, { ...history, ...todo } ],
       orders: {
         ...state.orders,
         [history.prev_manager_id]: 
@@ -109,7 +109,7 @@ const todoList = handleActions(
           ? [ ...acc, todo ]
           : [ ...acc, prevTodo ];
       }, []),
-      histories: [ ...state.history, { ...history, ...todo } ],
+      histories: [ ...state.histories, { ...history, ...todo } ],
     }),
   },
   initialState
