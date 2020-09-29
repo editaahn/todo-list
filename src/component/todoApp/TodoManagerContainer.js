@@ -19,11 +19,11 @@ const TodoManagerContainer = ({ managers, todos, getTodoDB, setManagerName, addT
             name={manager.name}
             todos={todos.filter(todo => todo.manager_id === manager.manager_id)}
             setManagerName={(id,name) => setManagerName({'manager_id': id, "name": name})}
-            addTodo={(id,content) => addTodo({'manager_id': id, 'content': content})}
-            deleteTodo={id => deleteTodo(id)}
+            addTodo={(id,content,order) => addTodo({'manager_id': id, 'content': content, 'order': order.join(',')})}
+            deleteTodo={(id,order) => deleteTodo({'id': id, 'order': order})}
             editTodo={(id,content) => editTodo({'todo_id': id, 'content': content})}
-            moveTodo={(param1,param2,param3,param4) => moveTodo({
-              'todo_id': param1, 'prev_manager_id': param2, 'manager_id': param3, 'index': param4
+            moveTodo={(param1,param2,param3,param4,param5) => moveTodo({
+              'todo_id': param1, 'prev_manager_id': param2, 'manager_id': param3, 'index': param4, 'order': param5,
             })}
             order={orders[manager.manager_id] || []}
           />

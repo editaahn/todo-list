@@ -54,10 +54,13 @@ const TodoManager = ({
     const currManagerID = afterDrop ? afterDrop.getAttribute('manager_id') : e.target.getAttribute('manager_id');
     const currIndex = afterDrop ? afterDrop.getAttribute('index') : e.target.childElementCount;
     
-    moveTodo(todoID, prevManagerID, currManagerID, currIndex);
+    moveTodo(todoID, prevManagerID, currManagerID, currIndex, order);
 
     afterDrop && afterDrop.classList.replace(afterDrop.className, 'todo-wrapper');
   };
+
+  // console.log(order.map((todo,i) => `(${todo}, ${id}, ${i})`).reverse().join(', '))
+  // console.log(order.join(','))
 
   return (
     <React.Fragment>
@@ -87,7 +90,12 @@ const TodoManager = ({
           className="manager__generator"
           style={{ display: isAddMode ? "flex" : "none" }}
         >
-          <TodoGenerator id={id} setAddMode={setAddMode} addTodo={addTodo} />
+          <TodoGenerator 
+            id={id} 
+            setAddMode={setAddMode} 
+            addTodo={addTodo}
+            order={order}
+          />
         </div>
         <ul
           className="manager__list"

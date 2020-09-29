@@ -30,6 +30,16 @@ def getAllHistory__execute():
                 AND h.date >= NOW() - INTERVAL 12 HOUR
         """)
 
+def getAllOrder__execute():
+    return text("""	
+            SELECT m.manager_id, o.order_list
+            FROM todo_manager m
+            LEFT JOIN todo_order o
+                ON m.manager_id = o.manager_id
+            WHERE m.deleted = 0
+            ORDER BY m.manager_id
+        """)
+
 # 매니저 이름 정하기 
 def setManagerName__execute():
     return text("""	
@@ -70,6 +80,12 @@ def add__history():
                 NOW(),
                 :manager_id
             )
+        """)
+def add__order():
+    return text("""
+            UPDATE todo_order
+            SET order_list = :order
+            WHERE manager_id = :manager_id
         """)
 
 # todo 지우기
@@ -138,12 +154,14 @@ def edit__history():
 # todo에 변화 발생 시 result 함수
 def todo__result():
     return text("""
-            SELECT h.*, t.*, a.type
+            SELECT h.*, t.*, a.type, o.order_list
             FROM todo t
             INNER JOIN history h
                 ON t.todo_id = h.todo_id
             LEFT OUTER JOIN action_type a
                 ON h.type_id = a.type_id
+            LEFT OUTER JOIN todo_order o
+                ON t.manager_id = o.manager_id
             WHERE t.todo_id = :id
                 AND h.history_id = :history_id
         """)

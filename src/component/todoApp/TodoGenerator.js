@@ -1,10 +1,10 @@
 import React, {useRef, useState} from "react";
 
-const TodoGenerator = ({ id, addTodo, setAddMode }) => {
+const TodoGenerator = ({ id, addTodo, setAddMode, order }) => {
   const [input, setInput] = useState("");
   const inputEl = useRef(null);
   const completeAddModeEvt = () => {
-    addTodo(id, input);
+    addTodo(id, input, order);
     inputEl.current.value = null;
   };
   const cancelAddModeEvt = () => {

@@ -40,15 +40,7 @@ const initialState = {
 //리듀서
 const todoList = handleActions(
   {
-    [GET_TODO_DB_SUCCESS]: (state, { payload: fetchedData }) => ({
-      ...fetchedData,
-      orders: fetchedData.todos.reduce((acc, todo) => {
-        todo.manager_id in acc
-          ? acc[todo.manager_id].push(todo.todo_id)
-          : acc[todo.manager_id] = [todo.todo_id];
-        return acc;
-      }, {}),
-    }),
+    [GET_TODO_DB_SUCCESS]: (state, { payload: fetchedData }) => fetchedData,
     [SET_MANAGER_NAME_SUCCESS]: (state, { payload: newManager }) => ({
       ...state,
       managers: state.managers.reduce((acc, prevManager) => {
@@ -58,14 +50,18 @@ const todoList = handleActions(
         return acc;
       }, []),
     }),
-    [ADD_TODO_SUCCESS]: (state, { payload: { todo, history } }) => ({
+    [ADD_TODO_SUCCESS]: (state, { payload: { todo, history, order } }) => ({
       ...state,
       todos: state.todos.concat(todo),
       histories: [ ...state.histories, { ...history, ...todo } ],
       orders: {
         ...state.orders,
-        [todo.manager_id]: [todo.todo_id, ...state.orders[todo.manager_id]]
+        [todo.manager_id]: order
       }
+      // orders: {
+      //   ...state.orders,
+      //   [todo.manager_id]: [todo.todo_id, ...state.orders[todo.manager_id]]
+      // }
     }),
     [DELETE_TODO_SUCCESS]: (state, { payload: { todo, history } }) => ({
       ...state,
