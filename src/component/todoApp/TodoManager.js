@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Todo from "./Todo";
 import EditPopup from "./EditPopup";
 import TodoGenerator from "./TodoGenerator";
+import TodoManagerHeader from "./TodoManagerHeader"
+
 import { drag, dragEnter, dragLeave, allowDrop, drop } from "../../library/dragAndDropEvent";
 
 const TodoManager = ({
@@ -30,24 +32,13 @@ const TodoManager = ({
       id={"manager_" + id}
       className="manager"
     >
-      <header className="manager__header">
-        <div className="manager__subject">
-          <em className="manager__subject__count">{todos.length}</em>
-          <h2
-            className="manager__subject__title"
-            onClick={() => setNameEditMode(true)}
-          >
-            {name}
-          </h2>
-        </div>
-        <button
-          className="button--add"
-          onClick={() => setAddMode(!isAddMode)}
-          style={{}}
-        >
-          새로운할일
-        </button>
-      </header>
+      <TodoManagerHeader 
+        setNameEditMode={setNameEditMode} 
+        todos={todos}
+        name={name} 
+        etAddMode={setAddMode} 
+        isAddMode={isAddMode}
+      />
       <div
         className="manager__generator"
         style={{ display: isAddMode ? "flex" : "none" }}
