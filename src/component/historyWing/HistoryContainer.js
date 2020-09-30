@@ -21,13 +21,13 @@ const HistoryContainer = ({isHistoryOpen}) => {
             key={history.history_id}
             content={history.content}
             date={history.date}
-            prev_manager_name={
-              history.prev_manager_id &&
-                managers.find(manager => manager.manager_id === history.prev_manager_id).name
+            prev_manager={
+              history.prev_manager_id && 
+                managers.find(manager => manager.manager_id === history.prev_manager_id)
             }
-            current_manager_name={
+            current_manager={
               history.manager_id &&
-                managers.find(manager => manager.manager_id === history.manager_id).name
+                managers.find(manager => manager.manager_id === history.manager_id)
             }
             type={history.type}
           />

@@ -10,6 +10,7 @@ const TodoManager = ({
   todos,
   name,
   id,
+  deleteManager,
   setManagerName,
   editTodo,
   addTodo,
@@ -33,11 +34,13 @@ const TodoManager = ({
       className="manager"
     >
       <TodoManagerHeader 
+        id={id}
         setNameEditMode={setNameEditMode} 
         todos={todos}
         name={name} 
-        etAddMode={setAddMode} 
+        setAddMode={setAddMode} 
         isAddMode={isAddMode}
+        deleteManager={deleteManager}
       />
       <div
         className="manager__generator"

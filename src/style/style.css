@@ -30,6 +30,7 @@ button {
   width: 1.5rem;
   height: 1.5rem;
   background: url('/add.svg') no-repeat;
+  margin-right: 5px;
 }
 .button--add:hover {
   background: url('/add_hover.svg') no-repeat;
@@ -97,6 +98,12 @@ button {
   height: 2rem;
   background: url('/add_manager.svg') no-repeat;
   margin-right: 1rem;
+}
+
+.button--delete-manager {
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url('/delete.svg') no-repeat;
 }
 
 /* 헤더 */

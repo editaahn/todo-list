@@ -73,6 +73,23 @@ def create_app(test_config=None):  # 1)
             'name': result.name, 
         }) if result else None
 
+    
+    # manager 삭제
+    @app.route('/todo-list/manager/deleted-manager', methods=['POST'])
+    def delete_manager():
+        deleted_manager = request.json
+
+        app.database.execute(deleteManager__execute(), deleted_manager)
+
+        result = current_app.database.execute(
+            deleteManager__result(),
+            {'id': deleted_manager['manager_id']}
+        ).fetchone()
+        
+        return jsonify({
+            'manager_id': result.manager_id,
+        }) if result else None
+
     # manager 이름 변경
     @app.route('/todo-list/manager/name', methods=['POST'])
     def set_manager_name():
@@ -166,7 +183,7 @@ def create_app(test_config=None):  # 1)
                 'date': result.date,
                 'prev_manager_id': result.manager_id,
             },
-            'order': [int (i) for i in result.order_list.split(',')]
+            'order': [int (i) for i in result.order_list.split(',')] if result.order_list else []
         }) if result else None
 
     @app.route('/todo-list/todo/moved-todo', methods=['POST'])

@@ -5,7 +5,7 @@ import "./style/style.css";
 import HistoryContainer from "./component/historyWing/HistoryContainer";
 import EditPopup from "./component/todoApp/EditPopup";
 import { connect } from "react-redux";
-import * as actions from "./redux-module/todoList";
+import { addManager } from "./redux-module/todoList";
 
 const App = ({ addManager }) => {
   const [isHistoryOpen, setHistoryOpen] = useState(false);
@@ -35,5 +35,5 @@ const App = ({ addManager }) => {
 
 export default connect(
   ({ todoList }) => todoList,
-  actions
+  { addManager }
 )(App);

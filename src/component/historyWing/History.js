@@ -4,19 +4,21 @@ const History = ({
   type,
   content,
   date,
-  prev_manager_name,
-  current_manager_name,
+  prev_manager,
+  current_manager,
 }) => {
   const now = new Date()
   const past = new Date(date)
   past.setHours(past.getHours()-9)
-  // console.log(content, 'now,',now)
-  // console.log(past)
+
   const timeDiff = now.getTime()-past.getTime();
 
   const hour = Math.floor(timeDiff/(1000*60*60)) || '',
   minute = Math.floor(timeDiff/(1000*60)%60) || '',
   second = Math.floor(timeDiff/1000%60%60) || '';
+
+  const prev_manager_name = prev_manager ? prev_manager.name : '삭제된목록'
+  const current_manager_name = current_manager ? current_manager.name : '삭제된목록'
   
   return (
     <li className="history-center__history">

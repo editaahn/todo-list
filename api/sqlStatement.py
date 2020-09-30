@@ -67,6 +67,20 @@ def addManager__result():
             WHERE manager_id = :id
         """)
 
+# 매니저 삭제하기
+def deleteManager__execute():
+    return text("""	
+            UPDATE todo_manager
+            SET deleted = 1
+            WHERE manager_id = :manager_id
+        """)
+def deleteManager__result():
+    return text("""
+            SELECT *
+            FROM todo_manager
+            WHERE manager_id = :id
+        """)
+
 # 매니저 이름 정하기 
 def setManagerName__execute():
     return text("""	

@@ -10,7 +10,7 @@ const EditPopup = ({ type, title, id, content, changeValue, setEditMode, maxLeng
     <div className="popup-wrapper">
       <div className="popup">
         <h4>{title}</h4>
-        <h5>{ type === "TODO_CONTENT" ? 'Note' : 'Column name' }</h5>
+        <h5>{ type === "TODO_CONTENT" ? 'Note' : 'List name' }</h5>
         { type === "TODO_CONTENT" ? 
         <textarea
           className="popup__input"
