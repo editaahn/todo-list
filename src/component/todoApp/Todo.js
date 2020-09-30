@@ -9,9 +9,10 @@ const Todo = ({
   setTodoEditMode,
   setEditingTodoID,
   index,
+  order,
 }) => {
   const confirmDeletion = () => {
-    window.confirm("정말 삭제하시겠습니까?") && deleteTodo(todo_id);
+    window.confirm("정말 삭제하시겠습니까?") && deleteTodo(manager_id, todo_id, order);
   };
   const editEvt = () => {
     setTodoEditMode(true);
@@ -21,7 +22,7 @@ const Todo = ({
     <li
       className="todo-wrapper"
       draggable={true}
-      onDragStart={(e) => drag(e)}
+      onDragStart={(e) => drag(e, order, index)}
       manager_id={manager_id}
       todo_id={todo_id}
       index={index}

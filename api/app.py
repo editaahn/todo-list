@@ -52,7 +52,6 @@ def create_app(test_config=None):  # 1)
 
         for row in rows_order:
             data['orders'][row.manager_id] = [int (i) for i in row.order_list.split(',')]
-
         return jsonify(data)
 
     # manager 이름 변경
@@ -89,7 +88,7 @@ def create_app(test_config=None):  # 1)
         }).lastrowid
 
         app.database.execute(
-            add__order(), {
+            todo__order(), {
                 'manager_id': new_todo['manager_id'],
                 'order': str(new_todo_id) + ',' + new_todo['order']
             }
@@ -125,6 +124,13 @@ def create_app(test_config=None):  # 1)
             {'todo_id': deleted_todo['todo_id']}
         ).lastrowid
 
+        app.database.execute(
+            todo__order(), {
+                'manager_id': deleted_todo['manager_id'],
+                'order': deleted_todo['order']
+            }
+        )
+
         result = current_app.database.execute(
             todo__result(), 
             {'id': deleted_todo['todo_id'], 'history_id': history_id}
@@ -140,25 +146,38 @@ def create_app(test_config=None):  # 1)
                 'type': result.type,
                 'date': result.date,
                 'prev_manager_id': result.manager_id,
-            }
+            },
+            'order': [int (i) for i in result.order_list.split(',')]
         }) if result else None
 
-    @app.route('/todo-list/todo/moved-manager', methods=['POST'])
+    @app.route('/todo-list/todo/moved-todo', methods=['POST'])
     def move_todo():
         moved_todo = request.json
+        print(moved_todo)
 
         app.database.execute(
             move__execute(), {
             'id': moved_todo['todo_id'], 
-            'manager_id': moved_todo['manager_id']
+            'manager_id': moved_todo['curr_manager_id']
         })
 
         history_id = app.database.execute(
             move__history(), {
                 'todo_id': moved_todo['todo_id'],
                 'prev_manager_id': moved_todo['prev_manager_id'],
-                'manager_id': moved_todo['manager_id']
+                'manager_id': moved_todo['curr_manager_id']
         }).lastrowid
+
+        app.database.execute(
+            todo__order(), {
+                'manager_id': moved_todo['prev_manager_id'],
+                'order': moved_todo['prev_manager_order']
+        })
+        app.database.execute(
+            todo__order(), {
+                'manager_id': moved_todo['curr_manager_id'],
+                'order': moved_todo['curr_manager_order']
+        })
 
         result = current_app.database.execute(
             todo__result(), 
@@ -177,7 +196,10 @@ def create_app(test_config=None):  # 1)
                 'date': result.date,
                 'prev_manager_id': result.prev_manager_id,
             },
-            'index': int(moved_todo['index'])
+            'orders' : {
+                'curr_manager_order': [int (i) for i in result.order_list.split(',')],
+                'prev_manager_order': [int (i) for i in moved_todo['prev_manager_order'].split(',')],
+            }
         }) if result else None
 
     @app.route('/todo-list/todo/edited-todo', methods=['POST'])
@@ -209,7 +231,7 @@ def create_app(test_config=None):  # 1)
                 'history_id': result.history_id,
                 'type': result.type,
                 'date': result.date,
-        }
+            }
         }) 
 
     return app  # 5)
