@@ -37,7 +37,7 @@ export const drop = (e, moveTodo, order) => {
   if (e.target.tagName === "LI")
     droppedNode = e.target
   else if (e.target.tagName === "UL")
-    droppedNode = e.target.lastElementChild
+    droppedNode = e.target.lastElementChild || e.target
   else
     droppedNode = e.target.closest("li");
 
@@ -53,7 +53,7 @@ export const drop = (e, moveTodo, order) => {
   if ( data.curr_manager_id !== data.prev_manager_id ){
     data.prev_manager_order = data.prev_manager_order.filter(todo => todo !== data.todo_id)
     data.curr_manager_order = 
-      !data.curr_manager_order ? [ data.todo_id ] : newOrder(data.curr_manager_order)
+      !order ? [ data.todo_id ] : newOrder(data.curr_manager_order)
   }
   // 내부에서 옮기는 경우
   else {
@@ -72,9 +72,9 @@ export const drop = (e, moveTodo, order) => {
     }, [])
   }
 
+  console.log(data)
   data.prev_manager_order = data.prev_manager_order.join(',');
   data.curr_manager_order = data.curr_manager_order.join(',');
-  console.log(data)
   moveTodo(data);
   droppedNode.classList.replace(droppedNode.className, "todo-wrapper");
 };

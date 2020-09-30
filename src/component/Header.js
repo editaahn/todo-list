@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
-const Header = ({setHistoryOpened, isHistoryOpened}) => {
+const Header = ({ setHistoryOpen, isHistoryOpen, setManagerAddMode }) => {
   return (
     <header className="app-header">
       <h1>To-do List</h1>
-      <button className="button--more" onClick={() => setHistoryOpened(!isHistoryOpened)}>history</button>
+      <div className="app-header__button-wrapper">
+        <button className="button--add-manager" onClick={() => setManagerAddMode(true)}></button>
+        <button className="button--more" onClick={() => setHistoryOpen(!isHistoryOpen)}>history</button>
+      </div>
     </header>
   )
 }

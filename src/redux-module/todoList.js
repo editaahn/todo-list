@@ -9,6 +9,12 @@ const GET_TODO_DB_SUCCESS = 'todoList/GET_TODO_DB_SUCCESS';
 const SET_MANAGER_NAME = 'todoList/SET_MANAGER_NAME';
 const SET_MANAGER_NAME_SUCCESS = 'todoList/SET_MANAGER_NAME_SUCCESS';
 
+const ADD_MANAGER = 'todoList/ADD_MANAGER';
+const ADD_MANAGER_SUCCESS = 'todoList/ADD_MANAGER_SUCCESS';
+
+const DELETE_MANAGER = 'todoList/DELETE_MANAGER';
+const DELETE_MANAGER_SUCCESS = 'todoList/DELETE_MANAGER_SUCCESS';
+
 const ADD_TODO = 'todoList/ADD_TODO';
 const ADD_TODO_SUCCESS = 'todoList/ADD_TODO_SUCCESS';
 
@@ -24,6 +30,8 @@ const MOVE_TODO_SUCCESS = 'todoList/MOVE_TODO_SUCCESS';
 //비동기 통신 액션 생성 함수
 export const getTodoDB = requestThunk(GET_TODO_DB, request.getTodoDB);
 export const setManagerName = requestThunk(SET_MANAGER_NAME, request.setManagerName);
+export const addManager = requestThunk(ADD_MANAGER, request.addManager);
+export const deleteManager = requestThunk(DELETE_MANAGER, request.deleteManager);
 export const addTodo = requestThunk(ADD_TODO, request.addTodo);
 export const deleteTodo = requestThunk(DELETE_TODO, request.deleteTodo);
 export const editTodo = requestThunk(EDIT_TODO, request.editTodo);
@@ -41,6 +49,14 @@ const initialState = {
 const todoList = handleActions(
   {
     [GET_TODO_DB_SUCCESS]: (state, { payload: fetchedData }) => fetchedData,
+    [ADD_MANAGER_SUCCESS]: (state, { payload: newManager }) => ({
+      ...state,
+      managers: [...state.managers, newManager]
+    }),
+    [DELETE_MANAGER_SUCCESS]: (state, { payload: deletedManager }) => ({
+      ...state,
+      managers: state.managers.filter(manager => manager.manager_id !== deletedManager.manager_id)
+    }),
     [SET_MANAGER_NAME_SUCCESS]: (state, { payload: newManager }) => ({
       ...state,
       managers: state.managers.reduce((acc, prevManager) => {

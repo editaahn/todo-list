@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import * as actions from "../../redux-module/todoList";
 import TodoManager from "./TodoManager";
 
-const TodoManagerContainer = ({ managers, todos, getTodoDB, setManagerName, addTodo, deleteTodo, editTodo, moveTodo, loading, orders }) => {
+const TodoManagerContainer = ({ managers, todos, getTodoDB, deleteManager, setManagerName, addTodo, deleteTodo, editTodo, moveTodo, loading, orders }) => {
   useEffect(() => {
     getTodoDB();
   }, [getTodoDB]);
@@ -19,6 +19,8 @@ const TodoManagerContainer = ({ managers, todos, getTodoDB, setManagerName, addT
             name={manager.name}
             todos={todos.filter(todo => 
               todo.manager_id === manager.manager_id)}
+            deleteManager={id => 
+              deleteManager({ 'manager_id' : id })}
             setManagerName={(id,name) => 
               setManagerName({'manager_id': id, "name": name})}
             addTodo={(id,content,order) => 
