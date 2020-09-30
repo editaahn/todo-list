@@ -39,6 +39,34 @@ def getAllOrder__execute():
             ORDER BY m.manager_id
         """)
 
+# 매니저 추가하기
+def addManager__execute():
+    return text("""	
+            INSERT INTO todo_manager (
+                name,
+                deleted
+            ) VALUES (
+                :name,
+                0
+            )
+        """)
+def addManager__order():
+    return text("""	
+            INSERT INTO todo_order (
+                manager_id,
+                order_list
+            ) VALUES (
+                :id,
+                ''
+            )
+        """)
+def addManager__result():
+    return text("""
+            SELECT *
+            FROM todo_manager
+            WHERE manager_id = :id
+        """)
+
 # 매니저 이름 정하기 
 def setManagerName__execute():
     return text("""	

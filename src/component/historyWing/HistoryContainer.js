@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import History from "./History";
 
-const HistoryContainer = ({isHistoryOpened}) => {
+const HistoryContainer = ({isHistoryOpen}) => {
   const histories = useSelector(({ todoList }) => todoList.histories);
   const managers = useSelector(({ todoList }) => todoList.managers);
   const sortedHistories = histories.sort((a, b) => {
@@ -10,7 +10,7 @@ const HistoryContainer = ({isHistoryOpened}) => {
   });
 
   return (
-    <aside className="history-center" style={{ 'right' : isHistoryOpened ? '0' : '-28rem' }}>
+    <aside className="history-center" style={{ 'right' : isHistoryOpen ? '0' : '-28rem' }}>
       <header className="history-center__header">
         <h2>History</h2>
         <p>최근 12시간 이력을 보여줍니다.</p>

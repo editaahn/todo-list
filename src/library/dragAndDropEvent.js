@@ -37,7 +37,7 @@ export const drop = (e, moveTodo, order) => {
   if (e.target.tagName === "LI")
     droppedNode = e.target
   else if (e.target.tagName === "UL")
-    droppedNode = e.target.lastElementChild
+    droppedNode = e.target.lastElementChild || e.target
   else
     droppedNode = e.target.closest("li");
 

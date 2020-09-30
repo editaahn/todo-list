@@ -80,11 +80,23 @@ button {
   cursor: default;
 }
 
+.app-header__button-wrapper {
+  margin: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
 .button--more{
   width: 2rem;
   height: 2rem;
   background: url('/more.svg') no-repeat;
-  margin: 1.5rem;
+}
+
+.button--add-manager {
+  width: 2rem;
+  height: 2rem;
+  background: url('/add_manager.svg') no-repeat;
+  margin-right: 1rem;
 }
 
 /* 헤더 */

@@ -1,25 +1,25 @@
 import React, { useState } from "react";
 
-const EditPopup = ({ type, id, content, changeValue, setEditMode, maxLength = 500 }) => {
+const EditPopup = ({ type, title, id, content, changeValue, setEditMode, maxLength = 500 }) => {
   const [inputElValue, setInputElValue] = useState("");
   const completeEditModeEvt = () => {
-    changeValue(id, inputElValue);
+    type === "NEW_MANAGER" ? changeValue({'name':inputElValue}) : changeValue(id, inputElValue);
     setEditMode(false);
   };
   return (
     <div className="popup-wrapper">
       <div className="popup">
-        <h4>{ type === "MANAGER_NAME" ? `Edit ${content}` : 'Edit note' }</h4>
-        <h5>{ type === "MANAGER_NAME" ? 'Column name' : 'Note' }</h5>
-        { type === "MANAGER_NAME" ? 
-        <input
+        <h4>{title}</h4>
+        <h5>{ type === "TODO_CONTENT" ? 'Note' : 'Column name' }</h5>
+        { type === "TODO_CONTENT" ? 
+        <textarea
           className="popup__input"
           maxLength={maxLength}
           onChange={e => setInputElValue(e.target.value)}
           defaultValue={content}
         />
-        : 
-        <textarea
+        :
+        <input
           className="popup__input"
           maxLength={maxLength}
           onChange={e => setInputElValue(e.target.value)}

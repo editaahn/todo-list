@@ -87,6 +87,7 @@ const TodoManager = ({
       {isNameEditMode && (
         <EditPopup
           type="MANAGER_NAME"
+          title={`Edit ${name}`}
           id={id}
           content={name}
           changeValue={setManagerName}
@@ -97,6 +98,7 @@ const TodoManager = ({
       {isTodoEditMode && (
         <EditPopup
           type="TODO_CONTENT"
+          title="Edit note"
           id={editingTodoID}
           content={todos.find(todo => todo.todo_id === editingTodoID).content}
           changeValue={editTodo}

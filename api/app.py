@@ -16,7 +16,7 @@ def create_app(test_config=None):  # 1)
         app.config['DB_URL'], encoding='utf-8', max_overflow=0)  # 3)
     app.database = database  # 4)
 
-    # 전체 manager / todo / history 내려주기
+    # 전체 manager / todo / history / order 내려주기
     @app.route('/todo-list/all', methods=['GET'])
     def send_todo_list():
 
@@ -51,8 +51,27 @@ def create_app(test_config=None):  # 1)
             })
 
         for row in rows_order:
-            data['orders'][row.manager_id] = [int (i) for i in row.order_list.split(',')]
+            data['orders'][row.manager_id] = [int (i) for i in row.order_list.split(',')] if row.order_list else []
+
         return jsonify(data)
+
+    # manager 추가
+    @app.route('/todo-list/manager/new-manager', methods=['POST'])
+    def add_manager():
+        new_manager = request.json
+
+        new_manager_id = app.database.execute(addManager__execute(), new_manager).lastrowid
+        app.database.execute(addManager__order(), {'id': new_manager_id})
+
+        result = current_app.database.execute(
+            addManager__result(),
+            {'id': new_manager_id}
+        ).fetchone()
+        
+        return jsonify({
+            'manager_id': result.manager_id, 
+            'name': result.name, 
+        }) if result else None
 
     # manager 이름 변경
     @app.route('/todo-list/manager/name', methods=['POST'])
@@ -90,7 +109,7 @@ def create_app(test_config=None):  # 1)
         app.database.execute(
             todo__order(), {
                 'manager_id': new_todo['manager_id'],
-                'order': str(new_todo_id) + ',' + new_todo['order']
+                'order': str(new_todo_id) + ',' + str(new_todo['order']) if new_todo['order'] else str(new_todo_id)
             }
         )
 
@@ -153,7 +172,6 @@ def create_app(test_config=None):  # 1)
     @app.route('/todo-list/todo/moved-todo', methods=['POST'])
     def move_todo():
         moved_todo = request.json
-        print(moved_todo)
 
         app.database.execute(
             move__execute(), {
@@ -198,7 +216,7 @@ def create_app(test_config=None):  # 1)
             },
             'orders' : {
                 'curr_manager_order': [int (i) for i in result.order_list.split(',')],
-                'prev_manager_order': [int (i) for i in moved_todo['prev_manager_order'].split(',')],
+                'prev_manager_order': [int (i) for i in moved_todo['prev_manager_order'].split(',')] if moved_todo['prev_manager_order'] else [],
             }
         }) if result else None
 
