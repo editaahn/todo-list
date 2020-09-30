@@ -58,22 +58,17 @@ const todoList = handleActions(
         ...state.orders,
         [todo.manager_id]: order
       }
-      // orders: {
-      //   ...state.orders,
-      //   [todo.manager_id]: [todo.todo_id, ...state.orders[todo.manager_id]]
-      // }
     }),
-    [DELETE_TODO_SUCCESS]: (state, { payload: { todo, history } }) => ({
+    [DELETE_TODO_SUCCESS]: (state, { payload: { todo, history, order } }) => ({
       ...state,
       todos: state.todos.filter(prevTodo => prevTodo.todo_id !== todo.todo_id),
       histories: [ ...state.histories, { ...history, ...todo } ],
       orders: {
         ...state.orders,
-        [history.prev_manager_id]: state.orders[history.prev_manager_id]
-          .filter(prevTodo => prevTodo !== todo.todo_id)
+        [history.prev_manager_id]: order
       }
     }),
-    [MOVE_TODO_SUCCESS]: (state, { payload: { todo, history, index } }) => ({
+    [MOVE_TODO_SUCCESS]: (state, { payload: { todo, history, orders, } }) => ({
       ...state,
       todos: state.todos.reduce((acc, prevTodo) => {
         return prevTodo.todo_id === todo.todo_id
@@ -83,19 +78,8 @@ const todoList = handleActions(
       histories: [ ...state.histories, { ...history, ...todo } ],
       orders: {
         ...state.orders,
-        [history.prev_manager_id]: 
-          state.orders[history.prev_manager_id].filter( prevTodo => prevTodo !== todo.todo_id ),
-        [todo.manager_id]: 
-          !state.orders[todo.manager_id] 
-            ? [todo.todo_id] 
-            : state.orders[todo.manager_id].reduce((acc, todoInOrder, i, arr) => {
-                if (index === arr.length && i === arr.length-1)
-                  return [ ...acc, todoInOrder, todo.todo_id ] // 빈 공간에 drop한 경우 끝으로 붙임
-                else if (i === index) 
-                  return [ ...acc, todo.todo_id, todoInOrder ] // todo li들 사이에 drop한 경우 drop 위치에 끼움
-                else 
-                  return [ ...acc, todoInOrder ]
-              }, []),
+        [history.prev_manager_id]: orders.prev_manager_order,
+        [todo.manager_id]: orders.curr_manager_order,
       }
     }),
     [EDIT_TODO_SUCCESS]: (state, { payload: { todo, history } }) => ({
