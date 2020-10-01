@@ -3,7 +3,6 @@ import Todo from "./Todo";
 import EditPopup from "./EditPopup";
 import TodoGenerator from "./TodoGenerator";
 import TodoManagerHeader from "./TodoManagerHeader"
-
 import { drag, dragEnter, dragLeave, allowDrop, drop } from "../../library/dragAndDropEvent";
 
 const TodoManager = ({
@@ -75,7 +74,7 @@ const TodoManager = ({
             onDragLeave={dragLeave}
             index={i}
             order={order}
-        />
+          />
         ))}
       </ul>
       {isNameEditMode && (
