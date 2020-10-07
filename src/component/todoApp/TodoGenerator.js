@@ -16,7 +16,7 @@ const TodoGenerator = ({ id, addTodo, setAddMode, order }) => {
     <React.Fragment>
       <textarea
         ref={inputEl}
-        className="generator__input"
+        className="generator__input generator__input--dark"
         placeholder="새 노트 입력"
         maxLength='500'
         onChange={e=>setInput(e.target.value)}

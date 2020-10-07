@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "./component/Header";
 import TodoContainer from "./component/todoApp/TodoManagerContainer";
-import "./style/style.css";
+import "./style/style.scss";
 import HistoryContainer from "./component/historyWing/HistoryContainer";
 import EditPopup from "./component/todoApp/EditPopup";
 import { connect } from "react-redux";
