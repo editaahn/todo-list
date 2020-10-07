@@ -15,7 +15,7 @@ body {
 }
 
 .body--light {
-  background-color: #b6c6e0;
+  background-color: #c5d2e7;
 }
 
 
@@ -136,7 +136,7 @@ button {
   color: #fff;
 }
 .app-header--light {
-  background: linear-gradient(180deg, #5c5c5c41, #b6c6e0 100% );
+  background: linear-gradient(180deg, #5c5c5c41, #c5d2e7 100% );
   color: #3E3F41;
 }
 
@@ -178,7 +178,7 @@ button {
 
 .manager--light {
   @extend .manager;
-  background: linear-gradient(180deg, #b6c6e0 0%, #93C863 80%);
+  background: linear-gradient(180deg, #c5d2e7 0%, #93C863 80%);
   color: #3E3F41;
 }
 
@@ -315,7 +315,7 @@ button {
   background-color: #faf9f9;
   padding: 1.5rem;
   box-shadow: 0 0 20px #0000003b;
-
+  color: #3E3F41;
 }
 
 .popup > h4 {
