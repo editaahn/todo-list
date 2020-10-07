@@ -30,7 +30,7 @@ const TodoManager = ({
   return (
     <section 
       id={"manager_" + id}
-      className="manager"
+      className="manager manager--dark"
     >
       <TodoManagerHeader 
         id={id}

@@ -7,9 +7,17 @@
 }
 
 body {
-  background-color: #0f4c81;
   overflow: hidden;
 }
+
+.body--dark {
+  background-color: #0f4c81;
+}
+
+.body--light {
+  background-color: #c5d2e7;
+}
+
 
 input:focus, button:focus, textarea:focus {
   outline: none;
@@ -24,21 +32,19 @@ button {
   background: none;
   cursor: pointer;
   font-size: 0;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .button--add {
-  width: 1.5rem;
-  height: 1.5rem;
   background: url('/add.svg') no-repeat;
   margin-right: 5px;
-}
-.button--add:hover {
-  background: url('/add_hover.svg') no-repeat;
+  &:hover {
+    background: url('/add_hover.svg') no-repeat;
+  }
 }
 
 .button--delete {
-  width: 1.5rem;
-  height: 1.5rem;
   background: url('/delete.svg') no-repeat;
 }
 
@@ -54,6 +60,7 @@ button {
 
 .button--cancel {
   width: 5rem;
+  height: 2rem;
   background-color: #ffffff94;
   border: 1px solid #031d33;
   font-size: 1rem;
@@ -64,27 +71,18 @@ button {
 
 .button--complete {
   width: 5rem;
+  height: 2rem;
   background-color: #031d33;
   border: 1px solid #031d33;
   font-size: 1rem;
   line-height: 2rem;
   color: #fff;
-}
-
-.button--complete:disabled{
-  width: 5rem;
-  background-color: #cecece54;
-  border: 1px solid#cecece54;
-  font-size: 1rem;
-  line-height: 2rem;
-  color: #aaaaaa;
-  cursor: default;
-}
-
-.app-header__button-wrapper {
-  margin: 1.5rem;
-  display: flex;
-  align-items: center;
+  &:disabled{
+    background-color: #cecece54;
+    border: 1px solid#cecece54;
+    color: #aaaaaa;
+    cursor: default;
+  }
 }
 
 .button--more{
@@ -104,24 +102,56 @@ button {
   width: 1.5rem;
   height: 1.5rem;
   background: url('/delete.svg') no-repeat;
+  &:hover {
+    background: url('/delete_hover.svg') no-repeat;
+  }
+}
+
+.button--mode{
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 1rem;
+}
+
+.button--mode--light {
+  @extend .button--mode;
+  background: url('/light_mode.svg') no-repeat;
+}
+
+.button--mode--dark {
+  @extend .button--mode;
+  background: url('/dark_mode.svg') no-repeat;
 }
 
 /* 헤더 */
 .app-header {
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(180deg, #00000081 0%, #0f4c81 100% );
   height: 5rem;
-  display: flex;
+}
+.app-header--dark {
+  background: linear-gradient(180deg, #00000081 0%, #0f4c81 100% );
+  color: #fff;
+}
+.app-header--light {
+  background: linear-gradient(180deg, #5c5c5c41, #c5d2e7 100% );
+  color: #3E3F41;
 }
 
+
 .app-header > h1 {
-  color: #fff;
   font-size: 1.8rem;
   line-height: 5rem;
   font-weight: normal;
   padding-left: 1.5rem;
+}
+
+.app-header__button-wrapper {
+  display: flex;
+  align-items: center;
+  margin-right: 1.5rem;
 }
 
 /* 메인앱 */
@@ -138,7 +168,18 @@ button {
   padding: 1.5rem;
   margin: 1rem;
   box-sizing: border-box;
+}
+
+.manager--dark {
+  @extend .manager;
   background: linear-gradient(180deg, #0f4c81 0%, #2e2e2e5b 80%);
+  color: #ebebebce;
+}
+
+.manager--light {
+  @extend .manager;
+  background: linear-gradient(180deg, #c5d2e7 0%, #93C863 80%);
+  color: #3E3F41;
 }
 
 .manager+.manager {
@@ -149,7 +190,6 @@ button {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  color: #fff;
 }
 
 .manager__subject {
@@ -160,6 +200,7 @@ button {
 
 .manager__subject__count {
   background-color: #2e2e2e;
+  color: #fff;
   width: 1.2rem;
   height: 1.2rem;
   border-radius: 0.6rem;
@@ -195,7 +236,6 @@ button {
   background-color: #faf9f91c;
   padding: 1.5rem 1rem;
   cursor: pointer;
-  color: #ebebebbe;
 }
 
 .todo-wrapper--dragged--before::before {
@@ -223,13 +263,25 @@ button {
 .generator__input {
   min-height: 3.5rem;
   padding: 1rem;
-  background: #0f4c81;
   font-size: 1.2rem;
+}
+
+.generator__input--dark {
+  @extend .generator__input;
+  background: #0f4c81;
   color: #fff;
   border: 1px solid #fff;
 }
+
+.generator__input--light {
+  @extend .generator__input;
+  background: #c5d2e7;
+  color: #3E3F41;
+  border: 1px solid #93C863;
+}
+
 .generator__input::placeholder {
-  color: rgba(255, 255, 255, 0.479);
+  color: #ffffff7a;
 }
 
 .generator__buttons {
@@ -263,7 +315,7 @@ button {
   background-color: #faf9f9;
   padding: 1.5rem;
   box-shadow: 0 0 20px #0000003b;
-
+  color: #3E3F41;
 }
 
 .popup > h4 {
@@ -309,7 +361,7 @@ button {
   width: 25rem;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(90deg, #cecece 10%, #adadadcb 100%);
+  background: linear-gradient(90deg, #eeeeee 10%, #adadadcb 100%);
   padding: 1.5rem;
   height: calc(100vh - 8rem);
   box-shadow: -4px -4px 15px #0000002c;
