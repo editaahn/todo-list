@@ -45,8 +45,7 @@ export const drop = (e, moveTodo, order) => {
     ...JSON.parse(e.dataTransfer.getData("text/plain")),
     curr_manager_id: droppedNode.getAttribute('manager_id') * 1,
     curr_manager_order: order,
-    curr_index: 
-      e.target.tagName === "UL" ? e.target.childElementCount : droppedNode.getAttribute('index') * 1,
+    curr_index: droppedNode.getAttribute('index') * 1,
   }
 
   // 다른 manager로 옮기는 경우
@@ -64,7 +63,7 @@ export const drop = (e, moveTodo, order) => {
 
   function newOrder(prevOrder) {
     return prevOrder.reduce((acc, todoInOrder, i, arr) => {
-      if (data.curr_index === arr.length && i === arr.length-1)
+      if (e.target.tagName === "UL" && i === arr.length-1)
         return [ ...acc, todoInOrder, data.todo_id ] // 빈 공간에 drop한 경우 끝으로 붙임
       else if (i === data.curr_index) 
         return [ ...acc, data.todo_id, todoInOrder ] // todo li들 사이에 drop한 경우 drop 위치에 끼움
