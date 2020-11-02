@@ -23,12 +23,12 @@ CREATE TABLE history (
 );
 
 CREATE TABLE action_type (
-  action_id int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  type varchar(10) NOT NULL,
+  type_id int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  type varchar(10) NOT NULL
 );
 
 CREATE TABLE todo_order (
  order_id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
  manager_id int NOT NULL,
- order_list int NULL
+ order_list varchar(200) NULL
 );

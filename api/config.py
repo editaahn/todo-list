@@ -1,5 +1,5 @@
 db = {
-    'user'     : 'todo-rita',		# 1)
+    'user'     : 'rita',		# 1)
     'password' : 'rita10',		# 2)
     'host'     : 'localhost',	# 3)
     'port'     : 3306,			# 4)
