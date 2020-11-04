@@ -4,7 +4,7 @@ from sqlStatement import *
 from datetime import datetime
 
 def create_app(test_config=None):  # 1)
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='../build', static_url_path='/')
 
     # app.json_encoder = CustomJSONEncoder
 
@@ -15,6 +15,10 @@ def create_app(test_config=None):  # 1)
     database = create_engine(
         app.config['DB_URL'], encoding='utf-8', max_overflow=0)  # 3)
     app.database = database  # 4)
+
+    @app.route('/')
+    def index():
+        return app.send_static_file('index.html')
 
     # 전체 manager / todo / history / order 내려주기
     @app.route('/todo-list/all', methods=['GET'])
@@ -268,6 +272,9 @@ def create_app(test_config=None):  # 1)
                 'date': result.date,
             }
         }) 
+
+    if __name__ == '__main__':  
+        app.run('0.0.0.0', port=5000, debug=True)
 
     return app  # 5)
 
