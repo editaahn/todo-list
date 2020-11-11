@@ -155,19 +155,36 @@ button {
 }
 
 /* 메인앱 */
+.app-wrapper {
+  overflow-x: scroll;
+}
+
 .app {
+  float:left;
   display: flex;
   flex-direction: row;
   height: calc(100vh - 5rem);
 }
 
 .manager {
+  width: calc(33.3vw - 4.5rem);
+  box-sizing: content-box;
   display: flex;
   flex-direction: column;
-  width: 33.33vw;
   padding: 1.5rem;
   margin: 1rem;
-  box-sizing: border-box;
+}
+
+@media (max-width:768px) {
+  .manager {
+    width: 50vw;
+  }
+}
+
+@media (max-width:480px) {
+  .manager {
+    width:80vw;
+  }
 }
 
 .manager--dark {
@@ -356,7 +373,6 @@ button {
 /* 히스토리 */
 .history-center {
   position: absolute;
-  right: 0;
   top: 5rem;
   width: 25rem;
   display: flex;
@@ -365,7 +381,13 @@ button {
   padding: 1.5rem;
   height: calc(100vh - 8rem);
   box-shadow: -4px -4px 15px #0000002c;
-  transition: right 0.5s;
+  transition: right 0.5s, left 0.5s;
+}
+
+@media (max-width:480px) {
+  .history-center {
+    width: calc(100vw - 3rem);
+  }
 }
 
 .history-center__header{

@@ -2,9 +2,21 @@ import React, { useState } from "react";
 
 const EditPopup = ({ type, title, id, content, changeValue, setEditMode, maxLength = 500 }) => {
   const [inputElValue, setInputElValue] = useState("");
+
+      
   const completeEditModeEvt = () => {
-    type === "NEW_MANAGER" ? changeValue({'name':inputElValue}) : changeValue(id, inputElValue);
     setEditMode(false);
+
+    if (type === "NEW_MANAGER") {
+      changeValue({'name':inputElValue})
+      .then(() => {
+        const wrapperEl = document.querySelector(".app-wrapper");
+        wrapperEl.scrollLeft = wrapperEl.scrollWidth;
+      });
+      return;
+    }
+
+    changeValue(id, inputElValue);
   };
   return (
     <div className="popup-wrapper">

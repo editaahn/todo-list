@@ -6,6 +6,9 @@ const TodoGenerator = ({ id, addTodo, setAddMode, order }) => {
   const completeAddModeEvt = () => {
     addTodo(id, input, order);
     inputEl.current.value = null;
+
+    const listEl = inputEl.current.closest("section").lastChild;
+    listEl.scrollTop = 0;
   };
   const cancelAddModeEvt = () => {
     setAddMode(false);
