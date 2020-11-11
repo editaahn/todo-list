@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./component/Header";
 import TodoContainer from "./component/todoApp/TodoManagerContainer";
-import "./style/style.scss";
 import HistoryContainer from "./component/historyWing/HistoryContainer";
+import "./style/style.scss";
 import EditPopup from "./component/todoApp/EditPopup";
 import { connect } from "react-redux";
 import { addManager } from "./redux-module/todoList";
 
 const App = ({ addManager }) => {
+  useEffect(() => {
+    const colorMode = localStorage.getItem("color-mode");
+    const isOSDark = window.matchMedia('(prefers-color-scheme : dark)').matches;
+    document.documentElement.setAttribute("color-mode", 
+      (colorMode === 'dark' || (!colorMode && isOSDark))
+      ? 'dark' : 'light'
+    );
+  });
+
   const [isHistoryOpen, setHistoryOpen] = useState(false);
   const [isManagerAddMode, setManagerAddMode] = useState(false);
 

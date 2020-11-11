@@ -1,3 +1,24 @@
+/* color set */
+:root[color-mode='dark'] {
+  --basic-color: #0f4c81;
+  --point-color-stronger: #fff;
+  --point-color-weaker: #ebebebce;
+  --element-color: #031d33;
+  --gradient-color1: linear-gradient(180deg, #1f3d5a 10%, #0f4c81 100%);
+  --gradient-color2: linear-gradient(180deg, #155186 0%, #2e2e2e5b 80%);
+  --button-background-url: url('/dark_mode.svg') no-repeat;
+}
+
+:root[color-mode='light'] {
+  --basic-color:#c5d2e7;
+  --point-color-stronger: #3E3F41;
+  --point-color-weaker: #3E3F41;
+  --element-color: #93C863;
+  --gradient-color1: linear-gradient(180deg, #5c5c5c41 0%, #c5d2e7 100%);
+  --gradient-color2: linear-gradient(180deg, #c5d2e7 0%, #93C863 80%);
+  --button-background-url: url('/light_mode.svg') no-repeat;
+}
+
 /* 공통 */
 * {
   margin: 0;
@@ -8,16 +29,9 @@
 
 body {
   overflow: hidden;
+  background: var(--basic-color);
+  transition: all 0.5s;
 }
-
-.body--dark {
-  background-color: #0f4c81;
-}
-
-.body--light {
-  background-color: #c5d2e7;
-}
-
 
 input:focus, button:focus, textarea:focus {
   outline: none;
@@ -27,6 +41,7 @@ textarea {
   resize:vertical;
 }
 
+/* 버튼 스타일 */
 button {
   border: 0;
   background: none;
@@ -62,18 +77,18 @@ button {
   width: 5rem;
   height: 2rem;
   background-color: #ffffff94;
-  border: 1px solid #031d33;
+  border: 1px solid var(--element-color);;
   font-size: 1rem;
   line-height: 2rem;
-  color: #031d33;
+  color: var(--point-color-stronger);
   box-sizing: border-box;
 }
 
 .button--complete {
   width: 5rem;
   height: 2rem;
-  background-color: #031d33;
-  border: 1px solid #031d33;
+  background-color: var(--element-color);
+  border: 1px solid var(--element-color);
   font-size: 1rem;
   line-height: 2rem;
   color: #fff;
@@ -111,16 +126,7 @@ button {
   width: 1.5rem;
   height: 1.5rem;
   margin-right: 1rem;
-}
-
-.button--mode--light {
-  @extend .button--mode;
-  background: url('/light_mode.svg') no-repeat;
-}
-
-.button--mode--dark {
-  @extend .button--mode;
-  background: url('/dark_mode.svg') no-repeat;
+  background: var(--button-background-url)
 }
 
 /* 헤더 */
@@ -130,16 +136,8 @@ button {
   justify-content: space-between;
   align-items: center;
   height: 5rem;
+  color: var(--point-color-stronger)
 }
-.app-header--dark {
-  background: linear-gradient(180deg, #00000081 0%, #0f4c81 100% );
-  color: #fff;
-}
-.app-header--light {
-  background: linear-gradient(180deg, #5c5c5c41, #c5d2e7 100% );
-  color: #3E3F41;
-}
-
 
 .app-header > h1 {
   font-size: 1.8rem;
@@ -173,6 +171,8 @@ button {
   flex-direction: column;
   padding: 1.5rem;
   margin: 1rem;
+  background: var(--gradient-color2);
+  color: var(--point-color-weaker)
 }
 
 @media (max-width:768px) {
@@ -185,18 +185,6 @@ button {
   .manager {
     width:80vw;
   }
-}
-
-.manager--dark {
-  @extend .manager;
-  background: linear-gradient(180deg, #0f4c81 0%, #2e2e2e5b 80%);
-  color: #ebebebce;
-}
-
-.manager--light {
-  @extend .manager;
-  background: linear-gradient(180deg, #c5d2e7 0%, #93C863 80%);
-  color: #3E3F41;
 }
 
 .manager+.manager {
@@ -216,8 +204,8 @@ button {
 }
 
 .manager__subject__count {
-  background-color: #2e2e2e;
-  color: #fff;
+  background-color: var(--element-color);
+  color: var(--point-color-stronger);
   width: 1.2rem;
   height: 1.2rem;
   border-radius: 0.6rem;
@@ -281,24 +269,13 @@ button {
   min-height: 3.5rem;
   padding: 1rem;
   font-size: 1.2rem;
-}
-
-.generator__input--dark {
-  @extend .generator__input;
-  background: #0f4c81;
-  color: #fff;
-  border: 1px solid #fff;
-}
-
-.generator__input--light {
-  @extend .generator__input;
-  background: #c5d2e7;
-  color: #3E3F41;
-  border: 1px solid #93C863;
+  background: var(--basic-color);
+  color: var(--point-color-stronger);
+  border: 1px solid var(--point-color-weaker);
 }
 
 .generator__input::placeholder {
-  color: #ffffff7a;
+  color: var(--point-color-weaker);
 }
 
 .generator__buttons {
