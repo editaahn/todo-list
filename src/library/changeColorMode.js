@@ -1,12 +1,10 @@
-export const changeColorMode = (target) => {
-
+export const changeColorMode = () => {
   const colorMode = document.documentElement.getAttribute("color-mode");
-  console.log(colorMode)
 
-  document.documentElement.setAttribute(
-    "color-mode", 
-    colorMode === 'light' 
-      ? 'dark' 
-      : 'light'
-  );
+  const switchColorMode = (tobe) => {
+    document.documentElement.setAttribute("color-mode", tobe);
+    localStorage.setItem("color-mode", tobe);
+  };
+
+  switchColorMode(colorMode === 'light' ? 'dark' : 'light');
 }
