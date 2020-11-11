@@ -356,7 +356,6 @@ button {
 /* 히스토리 */
 .history-center {
   position: absolute;
-  right: 0;
   top: 5rem;
   width: 25rem;
   display: flex;
@@ -365,7 +364,14 @@ button {
   padding: 1.5rem;
   height: calc(100vh - 8rem);
   box-shadow: -4px -4px 15px #0000002c;
-  transition: right 0.5s;
+  transition: right 0.5s, left 0.5s;
+}
+
+@media (max-width:480px) {
+  .history-center {
+    width: calc(100vw - 3rem);
+  }
+
 }
 
 .history-center__header{
