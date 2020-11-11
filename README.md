@@ -18,7 +18,7 @@
 
 <h2>Action Items Remain</h2>
 <ol>
-  <li>Respoinsive design</li>
+  <li>Responsive design</li>
   <li>User login base system</li>
   <li>Sensoring OS dark / light mode change</li>
 </ol>
