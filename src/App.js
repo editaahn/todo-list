@@ -10,9 +10,13 @@ import { addManager } from "./redux-module/todoList";
 const App = ({ addManager }) => {
   useEffect(() => {
     const colorMode = localStorage.getItem("color-mode");
-    document.documentElement.setAttribute("color-mode", colorMode);
+    const isOSDark = window.matchMedia('(prefers-color-scheme : dark)').matches;
+    document.documentElement.setAttribute("color-mode", 
+      (colorMode === 'dark' || (!colorMode && isOSDark))
+      ? 'dark' : 'light'
+    );
   });
-  
+
   const [isHistoryOpen, setHistoryOpen] = useState(false);
   const [isManagerAddMode, setManagerAddMode] = useState(false);
 
