@@ -1,8 +1,8 @@
 <h1>To-do List</h1>
 
 <h2>Stacks What I Used </h2>
-<p>Front-end : use only React with no any library</p>
-<p>Back-end : Python Flask</p>
+<p>Front-end : React with Redux</p>
+<p>Back-end : Python with Flask, MySQL</p>
 
 <h2>Link</h2>
 <p>http://todo-ritaahn.site/</p>
@@ -14,11 +14,12 @@
   <li>Show histories of actions within 12hours</li>
   <li>Set dark / light mode</li>
   <li>Store data and histories on DB</li>
+  <li>Responsive design</li>
 </ol>
 
 <h2>Action Items Remain</h2>
 <ol>
-  <li>Responsive design</li>
+  <li>Touch interaction for mobile Web</li>
   <li>User login base system</li>
   <li>Sensoring OS dark / light mode change</li>
 </ol>
