@@ -2,20 +2,19 @@ import React from "react";
 import { useSelector } from "react-redux";
 import History from "./History";
 
-const HistoryContainer = ({isHistoryOpen}) => {
-  const histories = useSelector(({ todoList }) => todoList.histories);
-  const managers = useSelector(({ todoList }) => todoList.managers);
-  const sortedHistories = histories.sort((a, b) => {
+const HistoryContainer = () => {
+  const todoList = useSelector(({ todoList }) => todoList);
+  const view = useSelector(({ view }) => view);
+
+  const sortedHistories = todoList.histories.sort((a, b) => {
     return a.date < b.date ? 1 : -1;
   });
-
-  // const width = window.width
 
   return (
     <aside 
       className="history-center" 
       style={{ 
-        'right': isHistoryOpen ? '0' : `-30rem`,
+        'right': view.histories ? '0' : `-30rem`,
       }}
     >
       <header className="history-center__header">
@@ -30,11 +29,11 @@ const HistoryContainer = ({isHistoryOpen}) => {
             date={history.date}
             prev_manager={
               history.prev_manager_id && 
-                managers.find(manager => manager.manager_id === history.prev_manager_id)
+                todoList.managers.find(manager => manager.manager_id === history.prev_manager_id)
             }
             current_manager={
               history.manager_id &&
-                managers.find(manager => manager.manager_id === history.manager_id)
+                todoList.managers.find(manager => manager.manager_id === history.manager_id)
             }
             type={history.type}
           />

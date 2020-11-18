@@ -2,12 +2,12 @@ import React, {useRef, useState} from "react";
 import { useDispatch } from "react-redux";
 import { addTodo } from "../../redux-module/todoList";
 
-const TodoGenerator = ({ id, setAddMode, order }) => {
+const TodoGenerator = ({ id, toggleViewTodoGenerator, order }) => {
   const dispatch = useDispatch();
 
   const [input, setInput] = useState("");
   const inputEl = useRef(null);
-  
+
   const completeAddModeEvt = () => {
     const params = {
       manager_id: id,
@@ -24,7 +24,7 @@ const TodoGenerator = ({ id, setAddMode, order }) => {
   };
 
   const cancelAddModeEvt = () => {
-    setAddMode(false);
+    toggleViewTodoGenerator(false);
     inputEl.current.value = null;
   }
 

@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addManager } from "./redux-module/todoList";
+import { toggleViewManagerGenerator } from "./redux-module/view";
 import Header from "./component/Header";
 import TodoContainer from "./component/todoApp/TodoManagerContainer";
 import HistoryContainer from "./component/historyWing/HistoryContainer";
-import "./style/style.scss";
 import EditPopup from "./component/todoApp/EditPopup";
-import { connect } from "react-redux";
-import { addManager } from "./redux-module/todoList";
+import "./style/style.scss";
 
-const App = ({ addManager }) => {
+const App = () => {
+  const view = useSelector(({ view }) => view);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const colorMode = localStorage.getItem("color-mode");
     const isOSDark = window.matchMedia('(prefers-color-scheme : dark)').matches;
@@ -17,24 +21,17 @@ const App = ({ addManager }) => {
     );
   });
 
-  const [isHistoryOpen, setHistoryOpen] = useState(false);
-  const [isManagerAddMode, setManagerAddMode] = useState(false);
-
   return (
     <React.Fragment>
-      <Header
-        setHistoryOpen={setHistoryOpen}
-        isHistoryOpen={isHistoryOpen}
-        setManagerAddMode={setManagerAddMode}
-      />
-      <HistoryContainer isHistoryOpen={isHistoryOpen} />
+      <Header />
+      <HistoryContainer />
       <TodoContainer />
-      {isManagerAddMode && 
+      {view.managerGenerator && 
         <EditPopup 
           type="NEW_MANAGER"
           title="새 컬럼 추가하기"
-          changeValue={addManager}
-          setEditMode={setManagerAddMode}
+          changeValue={() => dispatch( addManager() ) }
+          setEditMode={() => dispatch( toggleViewManagerGenerator() ) }
           maxLength={50}
         />
       }
@@ -42,7 +39,4 @@ const App = ({ addManager }) => {
   );
 };
 
-export default connect(
-  ({ todoList }) => todoList,
-  { addManager }
-)(App);
+export default App;

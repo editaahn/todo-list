@@ -3,9 +3,8 @@ import React, { useState } from "react";
 const EditPopup = ({ type, title, id, content, changeValue, setEditMode, maxLength = 500 }) => {
   const [inputElValue, setInputElValue] = useState("");
 
-      
   const completeEditModeEvt = () => {
-    setEditMode(false);
+    setEditMode();
 
     if (type === "NEW_MANAGER") {
       changeValue({'name':inputElValue})
@@ -24,19 +23,19 @@ const EditPopup = ({ type, title, id, content, changeValue, setEditMode, maxLeng
         <h4>{title}</h4>
         <h5>{ type === "TODO_CONTENT" ? 'Note' : 'List name' }</h5>
         { type === "TODO_CONTENT" ? 
-        <textarea
-          className="popup__input"
-          maxLength={maxLength}
-          onChange={e => setInputElValue(e.target.value)}
-          defaultValue={content}
-        />
-        :
-        <input
-          className="popup__input"
-          maxLength={maxLength}
-          onChange={e => setInputElValue(e.target.value)}
-          defaultValue={content}
-        />
+          <textarea
+            className="popup__input"
+            maxLength={maxLength}
+            onChange={e => setInputElValue(e.target.value)}
+            defaultValue={content}
+          />
+          :
+          <input
+            className="popup__input"
+            maxLength={maxLength}
+            onChange={e => setInputElValue(e.target.value)}
+            defaultValue={content}
+          />
         }
         <button
           className="button--complete"
@@ -47,7 +46,7 @@ const EditPopup = ({ type, title, id, content, changeValue, setEditMode, maxLeng
         </button>
         <button
           className="button--close"
-          onClick={() => setEditMode(false)}
+          onClick={() => setEditMode()}
         >
           Cancel
         </button>

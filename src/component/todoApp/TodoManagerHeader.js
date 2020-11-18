@@ -7,8 +7,7 @@ const TodoManagerHeader = ({
   setNameEditMode,
   todos,
   name,
-  setAddMode,
-  isAddMode,
+  toggleTodoGenerator,
 }) => {
   const dispatch = useDispatch();
 
@@ -26,7 +25,7 @@ const TodoManagerHeader = ({
         <em className="manager__subject__count">{todos.length}</em>
         <h2
           className="manager__subject__title"
-          onClick={() => setNameEditMode(true)}
+          onClick={() => setNameEditMode()}
         >
           {name}
         </h2>
@@ -34,7 +33,7 @@ const TodoManagerHeader = ({
       <div className="manager__buttons">
         <button
           className="button--add"
-          onClick={() => setAddMode(!isAddMode)}
+            onClick={toggleTodoGenerator}
         >
           새로운할일
         </button>

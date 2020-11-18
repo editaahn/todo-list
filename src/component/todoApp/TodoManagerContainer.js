@@ -1,12 +1,16 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getTodoDB } from "../../redux-module/todoList";
 import TodoManager from "./TodoManager";
 
-const TodoManagerContainer = ({ managers, todos, orders, getTodoDB }) => {
+const TodoManagerContainer = () => {
+  const { managers, todos, orders } = useSelector(({ todoList }) => todoList);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    getTodoDB();
-  }, [getTodoDB]);
+    dispatch( getTodoDB() );
+  }, []);
+
   return (
     <div className="app-wrapper" style={{ overflowX: managers.length > 3 }}>
       <main className="app">
@@ -27,7 +31,4 @@ const TodoManagerContainer = ({ managers, todos, orders, getTodoDB }) => {
   );
 };
 
-export default connect(
-  ({ todoList, loading }) => ({ ...todoList, ...loading }),
-  { getTodoDB }
-)(TodoManagerContainer);
+export default TodoManagerContainer;

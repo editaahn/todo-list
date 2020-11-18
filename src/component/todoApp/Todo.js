@@ -1,14 +1,13 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { deleteTodo } from "../../redux-module/todoList";
+import { toggleViewTodoEditor, setTodoIdEditing } from "../../redux-module/view";
 
 const Todo = ({
   drag,
   content,
   manager_id,
   todo_id,
-  setTodoEditMode,
-  setEditingTodoID,
   index,
   order,
 }) => {
@@ -24,10 +23,12 @@ const Todo = ({
     window.confirm("정말 삭제하시겠습니까?") && 
       dispatch( deleteTodo(params) );
   };
+
   const editEvt = () => {
-    setTodoEditMode(true);
-    setEditingTodoID(todo_id);
+    dispatch( setTodoIdEditing(todo_id) );
+    dispatch( toggleViewTodoEditor() );
   };
+
   return (
     <li
       className="todo-wrapper"

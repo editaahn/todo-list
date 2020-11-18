@@ -1,44 +1,42 @@
 import React, { useState } from "react";
+import { drag, dragEnter, dragLeave, allowDrop, drop } from "../../library/dragAndDropEvent";
+import { useDispatch, useSelector } from "react-redux";
+import { setManagerName, editTodo, moveTodo } from "../../redux-module/todoList";
+import { toggleViewManagerNameEditor, toggleViewTodoEditor } from "../../redux-module/view";
 import Todo from "./Todo";
 import EditPopup from "./EditPopup";
 import TodoGenerator from "./TodoGenerator";
 import TodoManagerHeader from "./TodoManagerHeader"
-import { drag, dragEnter, dragLeave, allowDrop, drop } from "../../library/dragAndDropEvent";
-import { useDispatch } from "react-redux";
-import { setManagerName, editTodo, moveTodo } from "../../redux-module/todoList";
 
 const TodoManager = ({ todos, name, id, order }) => {
+  const view = useSelector(({ view }) => view)
+  const dispatch = useDispatch();
+  const onMoveTodo = (data) => dispatch( moveTodo(data) );
+
   const sortedTodos = order.reduce((acc, todoInOrder) => {
     return acc.concat(
       todos.find(todo => todo.todo_id === todoInOrder)
     );
   }, []);
 
-  const dispatch = useDispatch();
-  const onMoveTodo = (data) => dispatch( moveTodo(data) );
-
-  const [isNameEditMode, setNameEditMode] = useState(false);
-  const [isTodoEditMode, setTodoEditMode] = useState(false);
-  const [editingTodoID, setEditingTodoID] = useState(null);
-  const [isAddMode, setAddMode] = useState(false);
+  const [isTodoGeneratorVisible, toggleTodoGenerator] = useState(false);
 
   return (
     <section id={"manager_" + id} className="manager manager--dark">
       <TodoManagerHeader
         id={id}
-        setNameEditMode={setNameEditMode}
+        setNameEditMode={() => dispatch( toggleViewManagerNameEditor() ) }
         todos={todos}
         name={name}
-        setAddMode={setAddMode}
-        isAddMode={isAddMode}
+        toggleTodoGenerator={() => toggleTodoGenerator(!isTodoGeneratorVisible)}
       />
       <div
         className="manager__generator"
-        style={{ display: isAddMode ? "flex" : "none" }}
+        style={{ display: isTodoGeneratorVisible ? "flex" : "none" }}
       >
         <TodoGenerator
           id={id}
-          setAddMode={setAddMode}
+          toggleTodoGenerator={toggleTodoGenerator}
           order={order}
         />
       </div>
@@ -56,8 +54,6 @@ const TodoManager = ({ todos, name, id, order }) => {
             manager_id={id}
             todo_id={todo.todo_id}
             content={todo.content}
-            setTodoEditMode={setTodoEditMode}
-            setEditingTodoID={setEditingTodoID}
             drag={drag}
             onDragEnter={dragEnter}
             onDragLeave={dragLeave}
@@ -66,7 +62,7 @@ const TodoManager = ({ todos, name, id, order }) => {
           />
         ))}
       </ul>
-      {isNameEditMode && (
+      {view.managerNameEditor && (
         <EditPopup
           type="MANAGER_NAME"
           title={`Edit ${name}`}
@@ -75,20 +71,20 @@ const TodoManager = ({ todos, name, id, order }) => {
           changeValue={(id, newName) =>
             dispatch( setManagerName({ manager_id: id, name: newName }) )
           }
-          setEditMode={setNameEditMode}
+          setEditMode={() => dispatch( toggleViewManagerNameEditor() ) }
           maxLength={50}
         />
       )}
-      {isTodoEditMode && (
+      {view.todoEditor && view.todoIdEditing && (
         <EditPopup
           type="TODO_CONTENT"
           title="Edit note"
-          id={editingTodoID}
-          content={todos.find((todo) => todo.todo_id === editingTodoID).content}
+          id={view.todoIdEditing}
+          content={todos.find((todo) => todo.todo_id === view.todoIdEditing)?.content}
           changeValue={(id, content) =>
-            dispatch(editTodo({ todo_id: id, content: content }))
+            dispatch( editTodo({ todo_id: id, content: content }) )
           }
-          setEditMode={setTodoEditMode}
+          setEditMode={() => dispatch( toggleViewTodoEditor() ) }
           maxLength={50}
         />
       )}
