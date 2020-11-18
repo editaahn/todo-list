@@ -25,14 +25,22 @@ const TodoManager = ({ todos, name, id, order }) => {
     <section id={"manager_" + id} className="manager manager--dark">
       <TodoManagerHeader
         id={id}
-        setNameEditMode={() => dispatch( toggleViewManagerNameEditor() ) }
+        setNameEditMode={() => 
+          dispatch( toggleViewManagerNameEditor() ) 
+        }
         todos={todos}
         name={name}
-        toggleTodoGenerator={() => toggleTodoGenerator(!isTodoGeneratorVisible)}
+        toggleTodoGenerator={() => 
+          toggleTodoGenerator(!isTodoGeneratorVisible)
+        }
       />
       <div
         className="manager__generator"
-        style={{ display: isTodoGeneratorVisible ? "flex" : "none" }}
+        style={{ 
+          display: 
+            isTodoGeneratorVisible 
+              ? "flex" : "none" 
+          }}
       >
         <TodoGenerator
           id={id}
@@ -69,9 +77,14 @@ const TodoManager = ({ todos, name, id, order }) => {
           id={id}
           content={name}
           changeValue={(id, newName) =>
-            dispatch( setManagerName({ manager_id: id, name: newName }) )
+            dispatch( setManagerName({ 
+              manager_id: id, 
+              name: newName 
+            })
+          )}
+          setEditMode={() => 
+            dispatch( toggleViewManagerNameEditor() )
           }
-          setEditMode={() => dispatch( toggleViewManagerNameEditor() ) }
           maxLength={50}
         />
       )}
@@ -80,11 +93,21 @@ const TodoManager = ({ todos, name, id, order }) => {
           type="TODO_CONTENT"
           title="Edit note"
           id={view.todoIdEditing}
-          content={todos.find((todo) => todo.todo_id === view.todoIdEditing)?.content}
-          changeValue={(id, content) =>
-            dispatch( editTodo({ todo_id: id, content: content }) )
+          content={
+            todos.find((todo) => 
+              todo.todo_id === view.todoIdEditing
+            )?.content
           }
-          setEditMode={() => dispatch( toggleViewTodoEditor() ) }
+          changeValue={(id, content) =>
+            dispatch( 
+              editTodo({ 
+                todo_id: id, 
+                content: content 
+              })
+          )}
+          setEditMode={() => 
+            dispatch( toggleViewTodoEditor() )
+          }
           maxLength={50}
         />
       )}

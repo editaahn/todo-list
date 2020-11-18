@@ -4,7 +4,8 @@ import { getTodoDB } from "../../redux-module/todoList";
 import TodoManager from "./TodoManager";
 
 const TodoManagerContainer = () => {
-  const { managers, todos, orders } = useSelector(({ todoList }) => todoList);
+  const { managers, todos, orders } = 
+    useSelector(({ todoList }) => todoList);
   const dispatch = useDispatch();
 
   useEffect(() => {
