@@ -1,18 +1,28 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { deleteTodo } from "../../redux-module/todoList";
 
 const Todo = ({
   drag,
   content,
   manager_id,
   todo_id,
-  deleteTodo,
   setTodoEditMode,
   setEditingTodoID,
   index,
   order,
 }) => {
+  const dispatch = useDispatch();
+
   const confirmDeletion = () => {
-    window.confirm("정말 삭제하시겠습니까?") && deleteTodo(manager_id, todo_id, order);
+    const params = {
+      manager_id: manager_id,
+      todo_id: todo_id,
+      order: order.filter((todo) => todo !== todo_id).join(","),
+    };
+
+    window.confirm("정말 삭제하시겠습니까?") && 
+      dispatch( deleteTodo(params) );
   };
   const editEvt = () => {
     setTodoEditMode(true);

@@ -1,51 +1,33 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import * as actions from "../../redux-module/todoList";
+import { getTodoDB } from "../../redux-module/todoList";
 import TodoManager from "./TodoManager";
 
-const TodoManagerContainer = ({ 
-  managers, todos, getTodoDB, deleteManager, setManagerName, addTodo, deleteTodo, editTodo, moveTodo, loading, orders 
-}) => {
+const TodoManagerContainer = ({ managers, todos, orders, getTodoDB }) => {
   useEffect(() => {
     getTodoDB();
   }, [getTodoDB]);
-
   return (
-    <div 
-      className="app-wrapper" 
-      style={{ 'overflowX': managers.length > 3 }}
-    >
-      <main className="app" >
+    <div className="app-wrapper" style={{ overflowX: managers.length > 3 }}>
+      <main className="app">
         {managers &&
-          // !loading.GET_TODO_DB &&
           managers.map((manager) => (
             <TodoManager
               key={manager.manager_id}
               id={manager.manager_id}
               name={manager.name}
-              todos={todos.filter(todo => 
-                todo.manager_id === manager.manager_id)}
-              deleteManager={id => 
-                deleteManager({ 'manager_id' : id })}
-              setManagerName={(id,name) => 
-                setManagerName({'manager_id': id, "name": name})}
-              addTodo={(id,content,order) => 
-                addTodo({'manager_id': id, 'content': content, 'order': order.join(',')})}
-              deleteTodo={(manager_id,id,order) => 
-                deleteTodo({'manager_id': manager_id, 'todo_id': id, 'order': order.filter(todo => todo !== id).join(',')})}
-              editTodo={(id,content) => 
-                editTodo({'todo_id': id, 'content': content})}
-              moveTodo={data =>
-                moveTodo(data)}
-              order={orders[manager.manager_id] || []}
+              todos={todos.filter(
+                todo => todo.manager_id === manager.manager_id
+              )}
+              order={orders?.[manager.manager_id] || []}
             />
           ))}
       </main>
-  </div>
+    </div>
   );
-}
+};
 
 export default connect(
-  ({ todoList, loading }) => ({...todoList, ...loading}),
-  actions
+  ({ todoList, loading }) => ({ ...todoList, ...loading }),
+  { getTodoDB }
 )(TodoManagerContainer);

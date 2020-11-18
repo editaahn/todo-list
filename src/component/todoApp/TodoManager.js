@@ -4,23 +4,18 @@ import EditPopup from "./EditPopup";
 import TodoGenerator from "./TodoGenerator";
 import TodoManagerHeader from "./TodoManagerHeader"
 import { drag, dragEnter, dragLeave, allowDrop, drop } from "../../library/dragAndDropEvent";
+import { useDispatch } from "react-redux";
+import { setManagerName, editTodo, moveTodo } from "../../redux-module/todoList";
 
-const TodoManager = ({
-  todos,
-  name,
-  id,
-  deleteManager,
-  setManagerName,
-  editTodo,
-  addTodo,
-  deleteTodo,
-  moveTodo,
-  order,
-}) => {
-
+const TodoManager = ({ todos, name, id, order }) => {
   const sortedTodos = order.reduce((acc, todoInOrder) => {
-    return acc.concat(todos.find(todo => todo.todo_id === todoInOrder))
+    return acc.concat(
+      todos.find(todo => todo.todo_id === todoInOrder)
+    );
   }, []);
+
+  const dispatch = useDispatch();
+  const onMoveTodo = (data) => dispatch( moveTodo(data) );
 
   const [isNameEditMode, setNameEditMode] = useState(false);
   const [isTodoEditMode, setTodoEditMode] = useState(false);
@@ -28,45 +23,39 @@ const TodoManager = ({
   const [isAddMode, setAddMode] = useState(false);
 
   return (
-    <section 
-      id={"manager_" + id}
-      className="manager manager--dark"
-    >
-      <TodoManagerHeader 
+    <section id={"manager_" + id} className="manager manager--dark">
+      <TodoManagerHeader
         id={id}
-        setNameEditMode={setNameEditMode} 
+        setNameEditMode={setNameEditMode}
         todos={todos}
-        name={name} 
-        setAddMode={setAddMode} 
+        name={name}
+        setAddMode={setAddMode}
         isAddMode={isAddMode}
-        deleteManager={deleteManager}
       />
       <div
         className="manager__generator"
         style={{ display: isAddMode ? "flex" : "none" }}
       >
-        <TodoGenerator 
-          id={id} 
-          setAddMode={setAddMode} 
-          addTodo={addTodo}
+        <TodoGenerator
+          id={id}
+          setAddMode={setAddMode}
           order={order}
         />
       </div>
       <ul
         className="manager__list"
-        manager_id ={id}
-        onDrop={e => drop(e, moveTodo, order)}
-        onDragOver={e => allowDrop(e)}
-        onDragEnter={e => dragEnter(e)}
-        onDragLeave={e => dragLeave(e)}
+        manager_id={id}
+        onDrop={(e) => drop(e, onMoveTodo, order)}
+        onDragOver={(e) => allowDrop(e)}
+        onDragEnter={(e) => dragEnter(e)}
+        onDragLeave={(e) => dragLeave(e)}
       >
-        {sortedTodos.map((todo,i) => (
+        {sortedTodos.map((todo, i) => (
           <Todo
             key={todo.todo_id}
             manager_id={id}
             todo_id={todo.todo_id}
             content={todo.content}
-            deleteTodo={deleteTodo}
             setTodoEditMode={setTodoEditMode}
             setEditingTodoID={setEditingTodoID}
             drag={drag}
@@ -83,7 +72,9 @@ const TodoManager = ({
           title={`Edit ${name}`}
           id={id}
           content={name}
-          changeValue={setManagerName}
+          changeValue={(id, newName) =>
+            dispatch( setManagerName({ manager_id: id, name: newName }) )
+          }
           setEditMode={setNameEditMode}
           maxLength={50}
         />
@@ -93,8 +84,10 @@ const TodoManager = ({
           type="TODO_CONTENT"
           title="Edit note"
           id={editingTodoID}
-          content={todos.find(todo => todo.todo_id === editingTodoID).content}
-          changeValue={editTodo}
+          content={todos.find((todo) => todo.todo_id === editingTodoID).content}
+          changeValue={(id, content) =>
+            dispatch(editTodo({ todo_id: id, content: content }))
+          }
           setEditMode={setTodoEditMode}
           maxLength={50}
         />

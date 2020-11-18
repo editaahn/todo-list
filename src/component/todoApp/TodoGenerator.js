@@ -1,15 +1,28 @@
 import React, {useRef, useState} from "react";
+import { useDispatch } from "react-redux";
+import { addTodo } from "../../redux-module/todoList";
 
-const TodoGenerator = ({ id, addTodo, setAddMode, order }) => {
+const TodoGenerator = ({ id, setAddMode, order }) => {
+  const dispatch = useDispatch();
+
   const [input, setInput] = useState("");
   const inputEl = useRef(null);
+  
   const completeAddModeEvt = () => {
-    addTodo(id, input, order);
+    const params = {
+      manager_id: id,
+      content: input,
+      order: order.join(","),
+    };
+
+    dispatch( addTodo(params) );
+
     inputEl.current.value = null;
 
     const listEl = inputEl.current.closest("section").lastChild;
     listEl.scrollTop = 0;
   };
+
   const cancelAddModeEvt = () => {
     setAddMode(false);
     inputEl.current.value = null;

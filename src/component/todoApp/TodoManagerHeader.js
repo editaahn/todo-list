@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { deleteManager } from "../../redux-module/todoList";
 
 const TodoManagerHeader = ({
   id,
@@ -7,14 +9,16 @@ const TodoManagerHeader = ({
   name,
   setAddMode,
   isAddMode,
-  deleteManager,
 }) => {
+  const dispatch = useDispatch();
+
   const deleteManagerEvt = () => {
     if (todos.length > 0){
       alert("Note가 포함된 목록은 삭제할 수 없습니다. Note를 전부 지우고 시도해주세요.");
       return;
-    }
-    window.confirm("삭제하시겠습니까?") && deleteManager(id)
+    };
+    window.confirm("삭제하시겠습니까?") && 
+      dispatch( deleteManager({ manager_id: id }) );
   }
   return (
     <header className="manager__header">
