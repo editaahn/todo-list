@@ -17,8 +17,8 @@ const History = ({
   minute = Math.floor(timeDiff/(1000*60)%60) || '',
   second = Math.floor(timeDiff/1000%60%60) || '';
 
-  const prev_manager_name = prev_manager ? prev_manager.name : '삭제된목록'
-  const current_manager_name = current_manager ? current_manager.name : '삭제된목록'
+  const prev_manager_name = prev_manager?.name || '삭제된목록';
+  const current_manager_name = current_manager?.name || '삭제된목록';
   
   return (
     <li className="history-center__history">
