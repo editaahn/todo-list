@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { deleteTodo } from "../../redux-module/todoList";
-import { toggleViewTodoEditor, setTodoIdEditing } from "../../redux-module/view";
+import { toggleViewTodoEditor, setTodoEditing } from "../../redux-module/view";
 
 const Todo = ({
   drag,
@@ -25,7 +25,7 @@ const Todo = ({
   };
 
   const editEvt = () => {
-    dispatch( setTodoIdEditing(todo_id) );
+    dispatch( setTodoEditing({todo_id: todo_id, content: content}) );
     dispatch( toggleViewTodoEditor() );
   };
 

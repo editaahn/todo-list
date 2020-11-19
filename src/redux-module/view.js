@@ -6,7 +6,7 @@ const TOGGLE_VIEW_MANAGER_GENERATOR = 'view/TOGGLE_VIEW_MANAGER_GENERATOR';
 const TOGGLE_VIEW_MANAGER_NAME_EDITOR = 'view/TOGGLE_VIEW_MANAGER_NAME_EDITOR';
 const TOGGLE_VIEW_TODO_GENERATOR = 'view/TOGGLE_VIEW_TODO_GENERATOR';
 const TOGGLE_VIEW_TODO_EDITOR = 'view/TOGGLE_VIEW_TODO_EDITOR';
-const SET_TODO_ID_EDITING = 'view/SET_TODO_ID_EDITING';
+const SET_TODO_EDITING = 'view/SET_TODO_EDITING';
 
 //액션 생성 함수
 export const toggleViewHistories = createAction(TOGGLE_VIEW_HISTORIES);
@@ -14,7 +14,7 @@ export const toggleViewManagerGenerator = createAction(TOGGLE_VIEW_MANAGER_GENER
 export const toggleViewManagerNameEditor = createAction(TOGGLE_VIEW_MANAGER_NAME_EDITOR);
 export const toggleViewTodoGenerator = createAction(TOGGLE_VIEW_TODO_GENERATOR);
 export const toggleViewTodoEditor = createAction(TOGGLE_VIEW_TODO_EDITOR);
-export const setTodoIdEditing = createAction(SET_TODO_ID_EDITING, id => id);
+export const setTodoEditing = createAction(SET_TODO_EDITING, todo => todo);
 
 //초기상태
 const initialState = {
@@ -23,7 +23,7 @@ const initialState = {
   managerNameEditor: false,
   todoGenerator: false,
   todoEditor: false,
-  todoIdEditing: null
+  todoEditing: null
 };
 
 const view = handleActions(
@@ -48,9 +48,9 @@ const view = handleActions(
       ...state,
       todoEditor: !state.todoEditor
     }),
-    [SET_TODO_ID_EDITING]: (state, action) => ({
+    [SET_TODO_EDITING]: (state, action) => ({
       ...state,
-      todoIdEditing: action.payload
+      todoEditing: action.payload
     }),
   },
   initialState

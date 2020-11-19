@@ -88,16 +88,12 @@ const TodoManager = ({ todos, name, id, order }) => {
           maxLength={50}
         />
       )}
-      {view.todoEditor && view.todoIdEditing && (
+      {view.todoEditor && view.todoEditing && (
         <EditPopup
           type="TODO_CONTENT"
           title="Edit note"
-          id={view.todoIdEditing}
-          content={
-            todos.find((todo) => 
-              todo.todo_id === view.todoIdEditing
-            )?.content
-          }
+          id={view.todoEditing.todo_id}
+          content={view.todoEditing.content}
           changeValue={(id, content) =>
             dispatch( 
               editTodo({ 
