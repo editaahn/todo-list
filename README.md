@@ -15,11 +15,11 @@
   <li>Set dark / light mode</li>
   <li>Store data and histories on DB</li>
   <li>Responsive design</li>
+  <li>Sensoring OS dark / light mode change</li>
 </ol>
 
 <h2>Action Items Remain</h2>
 <ol>
   <li>Touch interaction for mobile Web</li>
   <li>User login base system</li>
-  <li>Sensoring OS dark / light mode change</li>
 </ol>
